@@ -7,16 +7,18 @@ req.open('GET', api)
 req.send()
 req.onreadystatechange = function () {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-        var response = JSON.parse(this.responseText)
+        let response = JSON.parse(this.responseText)
         console.log(response.length)//number of object available
         console.log(response[1])//test request
 
         if (response.length > 0) {//if teddy in stock
-            for (let i = 0; i <= response.length; i++) {//insert all teddies in a list
-                $('#objectList').html('<li id="object_' + i + '"></li>');
-                $('#object_' + i).html('<div class="row" id="row_object_' + i + '"></div>');
-                $('#row_object_' + i).html('<div class="col-md-3 col-sm-4">< img src = "'+ response[i].imageUrl+ '" alt = "image of a teddy" /></div >')
-            }
+            response.forEach((element, index, array)=> {//insert all teddies in a list
+                $('#objectList').append('<li id="object_' + index + '"class="listed-object"></li>');
+                $('#object_' + index).append('<div class="row" id="row_object_' + index + '"></div>');
+                $('#row_object_' + index).append('<div class="col-md-3 col-sm-4"><img class="object_img" src = "' + response[index].imageUrl + '" alt = "image of a teddy" /></div ><div class="col-sm-8 col-md-3"><div class="row"><div class="col-12">' + response[index].name +'</div></div><div class="row mt-auto"><div class="offset-6 col-3">buy </div></div></div>');
+                console.log(element)
+            })
+
         }
         else if (response.length === 0) {//if no teddy in stock
             
