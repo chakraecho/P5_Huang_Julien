@@ -15,7 +15,7 @@ req.onreadystatechange = function () {
         if (response.length > 0) {//if teddy in stock
             response.forEach((element, index, array) => {//insert all teddies in a list
                 //insert card
-                $('#objectList').append('<a href="product.html?' + response[index]._id + '" class="stretched-link card col-md-5 col-sm-8  ml-2 mr-2 mb-2" id="card_' + index + '"data-id="' + response[index]._id + '"></div>');
+                $('#objectList').append('<a href="product.html?' + response[index]._id + '" class="stretched-link card col-md-5 p-0 col-sm-8  ml-2 mr-2 mb-2" id="card_' + index + '"data-id="' + response[index]._id + '"></div>');
                 $('#card_' + index).append('<img class="card-img-top" id="card-img_' + index + '" alt="image de' + response[index].name + '" src="' + response[index].imageUrl + '"/>');
                 $('#card_' + index).append('<div class="card-body" id="card-body_' + index + '"> </div>');
                 $('#card-body_' + index).append('<div class="card-title text-center" id="card-title_' + index + '">' + response[index].name + '</div>');

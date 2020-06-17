@@ -1,3 +1,11 @@
 .brand{
     height:2em;
 }
+
+.card{
+    &-img{
+        &-top{
+            max-height:200px;
+        }
+    }
+}
