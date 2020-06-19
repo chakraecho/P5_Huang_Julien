@@ -7,6 +7,22 @@
   width: 100%;
 }
 
+#in_cart {
+  position: relative;
+}
+#in_cart span {
+  display: inline-block;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background-color: #c87a5e;
+}
+
 .brand {
   height: 2em;
 }
