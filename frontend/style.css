@@ -7,13 +7,16 @@
   width: 100%;
 }
 
-#in_cart {
+.wrapper-count {
+  width: max-content;
+  height: max-content;
   position: relative;
 }
-#in_cart span {
+
+#card_button {
   display: inline-block;
   position: absolute;
-  bottom: 0px;
+  bottom: -5px;
   right: 0px;
   border-radius: 50%;
   width: 20px;
