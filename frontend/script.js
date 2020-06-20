@@ -14,6 +14,9 @@ req.onreadystatechange = function () {
         itemsInCart = []
         $('#card_button').html('0')
     }
+    else if(localStorage.length ==0){
+        $('#card_button').html('0')
+    }
     else {
         itemsInCart = JSON.parse(cart.getItem('inCart'))
         $('#card_button').html(itemsInCart.length)
@@ -43,7 +46,7 @@ req.onreadystatechange = function () {
         }
     }
     else if (this.status == 404) {//if error
-        $('#objectList').html("Erreur 404, liste non reçu !")
+        $('#objectList').html("Erreur 404, liste non reï¿½u !")
     }
     $('.add_cart').on('click', function (e) {//ADD CART on button listener
         console.log(cart)
