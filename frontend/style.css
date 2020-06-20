@@ -6,6 +6,25 @@ body {
   width: 100%;
 }
 
+.wrapper-count {
+  width: max-content;
+  height: max-content;
+  position: relative;
+}
+
+#card_button {
+  display: inline-block;
+  position: absolute;
+  bottom: -5px;
+  right: 0px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background-color: #c87a5e;
+}
+
 .brand {
   height: 2em;
 }
