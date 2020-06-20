@@ -15,6 +15,7 @@ req.onreadystatechange = function () {
         $('#card_button').html('0')
     }
     else if(localStorage.length ==0){
+        itemsInCart=[]
         $('#card_button').html('0')
     }
     else {
