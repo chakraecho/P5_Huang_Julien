@@ -1,14 +1,36 @@
-.listed-object {
+body {
   background-color: #b3e5fc;
-  border-top: 5px solid #82b3c9;
-  border-bottom: 5px solid #82b3c9;
 }
+
 .listed-object div div img {
   width: 100%;
 }
 
+.wrapper-count {
+  width: max-content;
+  height: max-content;
+  position: relative;
+}
+
+#card_button {
+  display: inline-block;
+  position: absolute;
+  bottom: -5px;
+  right: 0px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  background-color: #c87a5e;
+}
+
 .brand {
   height: 2em;
+}
+
+.card-img-top {
+  max-height: 200px;
 }
 
 /*# sourceMappingURL=style.css.map */
