@@ -61,3 +61,47 @@ req.onreadystatechange = function () {
 };
 
 
+
+//REQ TO ID
+
+var nom = window.location.pathname;
+nom = nom.split("/");
+nom = nom[nom.length - 1];
+nom = nom.substr(0, nom.lastIndexOf("."));
+nom = nom.replace(new RegExp("(%20|_|-)", "g"), "");
+console.log(nom)
+
+if(nom == 'product'){
+    //PRODUCT PAGE GET /:id
+    let chemin = window.location.search
+    let idProduct = chemin.substring(1)
+    console.log(idProduct)
+
+    let XHR = new XMLHttpRequest
+    XHR.open('GET',api+ '/'+idProduct)
+    XHR.send()
+    XHR.onreadystatechange = function(){
+        if(this.readyState == XMLHttpRequest.DONE && this.status == 200){
+            let product = JSON.parse(this.responseText)
+            console.log(this.responseText)
+            console.log(product)
+            $('title').html("oribear "+product.name)
+            $('#product-title').html(product.name)
+            $('#product_body').append('<img class="col-sm-6 col-md-3" src="'+ product.imageUrl +'" alt="image de '+ product.name + '"/>')
+            $('#product_body').append('<p class="col-md-4 col-sm-8" id="product_description">'+product.description+'</p>')
+            $('#product_body').append('<div class="col-md-3 col-sm-10" id="product_cart_col"></div>')
+            $('#product_cart_col').append('<form id="color-select"> </form>')
+            $('#color-select').append('<label for="color-select_menu" id="color-label">Couleur :</label>')
+            $('#color-select').append('<select name="color-select_menu" id="color-select_menu"></select>')
+            $('#color-select_menu').append('<option value="">choisissez une couleur</option>')
+            for(let i=0; i <= product.colors.length;i++){
+                $('#color-select_menu').append('<option value="'+product.colors[i]+'">'+product.colors[i]+'</option>')
+            }
+            $('#product_cart_col').append('<button type="button" class="btn add_cart mx-auto btn-success" id="'+product._id+'" id="'+product._id+'">Ajouter au panier</button>')
+
+            console.log(product)
+        }
+    }
+
+}
+
