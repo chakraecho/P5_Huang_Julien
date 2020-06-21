@@ -87,20 +87,42 @@ if(nom == 'product'){
             console.log(product)
             $('title').html("oribear "+product.name)
             $('#product-title').html(product.name)
-            $('#product_body').append('<img class="col-sm-6 col-md-3" src="'+ product.imageUrl +'" alt="image de '+ product.name + '"/>')
+            $('#product_body').append('<img class="col-sm-6 col-md-3 offset-md-1" src="'+ product.imageUrl +'" alt="image de '+ product.name + '"/>')
             $('#product_body').append('<p class="col-md-4 col-sm-8" id="product_description">'+product.description+'</p>')
-            $('#product_body').append('<div class="col-md-3 col-sm-10" id="product_cart_col"></div>')
+            $('#product_body').append('<div class="col-md-3 col-sm-10 d-flex flex-column justify-content-between align-items-center" id="product_cart_col"></div>')
             $('#product_cart_col').append('<form id="color-select"> </form>')
             $('#color-select').append('<label for="color-select_menu" id="color-label">Couleur :</label>')
             $('#color-select').append('<select name="color-select_menu" id="color-select_menu"></select>')
             $('#color-select_menu').append('<option value="">choisissez une couleur</option>')
-            for(let i=0; i <= product.colors.length;i++){
+            for(let i=0; i < product.colors.length;i++){
                 $('#color-select_menu').append('<option value="'+product.colors[i]+'">'+product.colors[i]+'</option>')
             }
+            $('#product_cart_col').append('<h2>'+product.price/100+'€</h2>')
             $('#product_cart_col').append('<button type="button" class="btn add_cart mx-auto btn-success" id="'+product._id+'" id="'+product._id+'">Ajouter au panier</button>')
 
-            console.log(product)
         }
+        let itemsInCart;//create array for items
+        if (localStorage == null) {//if first time connecting to this website
+            itemsInCart = []
+            $('#card_button').html('0')
+        }
+        else if(localStorage.length ==0){
+            itemsInCart=[]
+            $('#card_button').html('0')
+        }
+        else {
+            itemsInCart = JSON.parse(cart.getItem('inCart'))
+            $('#card_button').html(itemsInCart.length)
+    
+        };
+        $('.add_cart').on('click', function (e) {//ADD CART on button listener
+            console.log(cart)
+            itemsInCart.push(this.id);
+            cart.setItem('inCart', JSON.stringify(itemsInCart))
+            console.log(JSON.parse(cart.getItem('inCart')))
+            //numbers of items in cart to the nav bar
+            $('#card_button').html(itemsInCart.length)
+        })
     }
 
 }
