@@ -12,16 +12,15 @@ req.onreadystatechange = function () {
     let itemsInCart;//create array for items
     if (localStorage == null) {//if first time connecting to this website
         itemsInCart = []
-        $('#card_button').html('0')
+        $('#in_cart_count').html('0')
     }
     else if(localStorage.length ==0){
         itemsInCart=[]
-        $('#card_button').html('0')
+        $('#in_cart_count').html('0')
     }
     else {
         itemsInCart = JSON.parse(cart.getItem('inCart'))
-        $('#card_button').html(itemsInCart.length)
-
+        $('#in_cart_count').html(itemsInCart.length)
     };
 
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
@@ -55,7 +54,7 @@ req.onreadystatechange = function () {
         cart.setItem('inCart', JSON.stringify(itemsInCart))
         console.log(JSON.parse(cart.getItem('inCart')))
         //numbers of items in cart to the nav bar
-        $('#card_button').html(itemsInCart.length)
+        $('#in_cart_count').html(itemsInCart.length)
     })
 
 };
@@ -121,9 +120,14 @@ if(nom == 'product'){
             cart.setItem('inCart', JSON.stringify(itemsInCart))
             console.log(JSON.parse(cart.getItem('inCart')))
             //numbers of items in cart to the nav bar
-            $('#card_button').html(itemsInCart.length)
-        })
+            $('#in_cart_count').html(itemsInCart.length)
+        });
     }
-
 }
+$('#in_cart').on('mouseover',function(){//Fade in Popover incart items
+    $('#in_cart_popover').fadeIn('slow')
+})
+$('#in_cart').on('mouseout',function(){//Fade out Popover incart items
+    $('#in_cart_popover').fadeOut('slow')
+})
 
