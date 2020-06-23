@@ -84,9 +84,10 @@ let cart = localStorage
 
 
 
-$('#in_cart').on('mouseover',function(){//Fade in Popover incart items
-    $('#in_cart_popover').fadeIn('slow')
-})
-$('#in_cart').on('mouseout',function(){//Fade out Popover incart items
-    $('#in_cart_popover').fadeOut('slow')
-})
+    $('#in_cart').on('mouseover',function(){//Fade in Popover incart items
+        $('#in_cart_popover').fadeIn('slow')
+    })
+    $('#in_cart').on('mouseout',function(){//Fade out Popover incart items
+        $('#in_cart_popover').fadeOut('slow')
+    })
+    
