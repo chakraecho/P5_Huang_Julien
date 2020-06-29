@@ -4,7 +4,38 @@ const api = "http://localhost:3000/api/teddies"
 
 //LOCAL STORAGE
 let cart = localStorage
+let itemsInCart;//create array for items
+let qtyInCart; //qty in cart
 
+function refreshCart(){
+    let cart_number = 0
+    for(let i=0; i < qtyInCart.length;i++){
+        cart_number += qtyInCart[i]
+    }
+    //numbers of items in cart to the nav bar
+    $('#in_cart_count').html(cart_number)
+}
+function clickAddCart(){
+    $('.add_cart').on('click', function (e) {//ADD CART on button listener
+        console.log(cart)
+        if(itemsInCart.includes(this.id)){
+            for(let i=0; i< itemsInCart.length;i++){
+                if(this.id === itemsInCart[i]){
+                    newQty = qtyInCart[i]
+                    newQty++
+                    qtyInCart[i] = newQty
+                }
+            }
+        }
+        else{
+            itemsInCart.push(this.id)
+            qtyInCart.push(1)
+        }
+        cart.setItem('inCart', JSON.stringify(itemsInCart))
+        cart.setItem('qtyInCart',JSON.stringify(qtyInCart))
+        refreshCart();
+    });
+}
 
 //REQ TO ID
 
@@ -12,8 +43,6 @@ let cart = localStorage
     let chemin = window.location.search
     let idProduct = chemin.substring(1)
     console.log(idProduct)
-    let itemsInCart=[];//create array for items
-    let qtyInCart=[]; //qty in cart
     let XHR = new XMLHttpRequest
     XHR.open('GET',api+ '/'+idProduct)
     XHR.send()

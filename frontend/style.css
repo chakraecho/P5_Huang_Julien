@@ -33,6 +33,7 @@ body {
   border-radius: 5px;
   padding: 5px;
   z-index: 5;
+  width: max-content;
 }
 #in_cart_popover:before {
   display: inline-block;
@@ -49,6 +50,10 @@ body {
 #in_cart_popover p {
   white-space: nowrap;
   color: black;
+}
+
+.in_cart_popover_img {
+  width: 100%;
 }
 
 .brand {

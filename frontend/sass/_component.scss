@@ -37,7 +37,7 @@
         border-radius:5px;
         padding:5px;
         z-index:5;
-
+        width:max-content;
 
         &:before{
             display : inline-block;
@@ -57,4 +57,12 @@
         }
     }
     
+}
+
+.in_cart{
+    &_popover{
+        &_img{
+            width:100%;
+        }
+    }
 }
