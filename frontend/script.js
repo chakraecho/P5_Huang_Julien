@@ -36,7 +36,6 @@ function clickAddCart(){
     });
 }
 
-
 //request GET to api
 var req = new XMLHttpRequest
 req.open('GET', api)
