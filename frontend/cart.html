@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css" />
+    <title>OrinoBear - panier</title>
+</head>
+<body>
+    <header>
+         <!--navbar-->
+        <nav class="col navbar navbar-expand-lg navbar-reverse bg-dark navbar-dark">
+                <a class="navbar-brand" href="index.html"><img src="img/titre.png" alt="titre orinoco" class="brand" /></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="navbarContent" class="bg-dark collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.html">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                            <div class="wrapper-count"><!-- wrapper for span position-->
+                                <img src="img/logo.png" id="in_cart" alt="panier" class="brand" />
+                                <span id="in_cart_count"></span>
+                                <span id="in_cart_popover">
+                                    <p>Dans le panier :</p>
+                                    <div class="row" id="in_cart_content"> <!-- popover to show in cart items-->
+                                </div>  
+                                </span>
+                            </div>
+                            </a>
+                
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href=""><img src="img/user.svg" alt="mon compte" class="brand" id="cart"/></a>
+                        </li>
+                    </ul>
+                </div>
+         </nav>
+     </header>
+     <main>
+        <div class="container">
+            <h1>Votre panier</h1>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class='container col-lg-8 col-md-6 col-sm-12'>
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6 col-sm-12" id="in-cart-list">
+                        
+                        </div>
+                    </div>
+                    <form>
+                        <div class="form-row mt-1 col-11 mx-auto">
+                            <label for='name' class='col-md-2 col-sm-4'>
+                                Nom
+                            </label>
+                            <input type="text" class='col-md-5 col-sm-8' id="name">
+                        </div>
+                        <div class="form-row mt-1 col-11 mx-auto">
+                            <label for='first-name' class='col-md-2 col-sm-4'>
+                                Prénom
+                            </label>
+                            <input type="text" class='col-md-5 col-sm-8' id="first-name">
+                        </div>
+                        <div class="form-row mt-1 col-11 mx-auto">
+                            <label for='email' class='col-md-2 col-sm-4'>
+                                email
+                            </label>
+                            <input type="email" class='col-md-5 col-sm-8'  id="email">
+                        </div>
+                        <div class="form-row mt-1 col-11 mx-auto">
+                            <label for='adress' class='col-md-2 col-sm-4'>
+                                adresse
+                            </label>
+                            <input type="text" class='col-md-5 col-sm-8'  id="adress">
+                        </div>
+                    </form>
+                    <div class=' col-lg-8 col-md-6 col-sm-12'>
+                        <form>
+                            <div class="form-row justify-content-around">
+                                
+                                    <input type='radio' name='payment-method' id="mastercard">
+                                    <label for="mastercard" class="w-25" control="mastercard"><img src="./img/cart/mastercard.svg" alt="mastercard" />  </label>
+                                
+                                    <input type='radio' id="visa" name='payment-method' control="visa">
+                                    <label for="visa" class="w-25"><img src="./img/cart/visa.svg" alt="visa" />  </label>
+                                
+
+                            </div>
+                            <div class="form-group">
+                                <label for="card-number" class="px-0 col-4">numéro de carte</label>
+                                <input type="text" pattern="\d{16}" name='card-number' id='card-number' class='col-7' />
+                            </div>
+                            <div class="form-group">
+                                <label for="card-name" class='px-0 col-4'>Titulaire</label>
+                                <input type="text" name='card-name' id='card-name' class="col-7" />
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    <label for="card-expire">exp</label>
+                                    <input type="number" class="col-4" max="12" name='card-expire-month' id='card-expire' />
+                                    <input type="number" max="99" class="col-4" min="20" name='card-expire-year' id="card-expire-year"/>
+                                </div>
+                                <div class='form-group col-6 justify-content-end'>
+                                    <label for='card-code'>code :</label>
+                                    <input type="password" pattern="\d{3}" id='card-code' name='card-code' class="col-4"/>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+        
+                <div class=" container col-lg-4 col-md-6 col-sm-12 position-sticky" id="in-cart-resume">
+                    <div class="row">
+                        <p>Total</p>
+                    </div>
+                    <div class="row">
+                        <p id="in-cart-total">
+        
+                        </p>
+                    </div>
+                    <div class="row">
+                        <button type="submit" class="btn-success btn">Passer commande</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        
+         
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
