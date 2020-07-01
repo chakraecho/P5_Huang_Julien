@@ -45,91 +45,106 @@
         <div class="container">
             <h1>Votre panier</h1>
         </div>
-        <div class="container">
+        <div class="container in-cart">
             <div class="row">
-                <div class='container col-lg-8 col-md-6 col-sm-12'>
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6 col-sm-12" id="in-cart-list">
+                <div class=" col-lg-8 col-md-6 col-sm-12">
+                    <div class='row'>
                         
-                        </div>
+                            <div class="col-lg-8 col-md-6 col-sm-12" id="in-cart-list">
+                            
+                            </div>
                     </div>
-                    <form>
-                        <div class="form-row mt-1 col-11 mx-auto">
-                            <label for='name' class='col-md-2 col-sm-4'>
-                                Nom
-                            </label>
-                            <input type="text" class='col-md-5 col-sm-8' id="name">
-                        </div>
-                        <div class="form-row mt-1 col-11 mx-auto">
-                            <label for='first-name' class='col-md-2 col-sm-4'>
-                                Prénom
-                            </label>
-                            <input type="text" class='col-md-5 col-sm-8' id="first-name">
-                        </div>
-                        <div class="form-row mt-1 col-11 mx-auto">
-                            <label for='email' class='col-md-2 col-sm-4'>
-                                email
-                            </label>
-                            <input type="email" class='col-md-5 col-sm-8'  id="email">
-                        </div>
-                        <div class="form-row mt-1 col-11 mx-auto">
-                            <label for='adress' class='col-md-2 col-sm-4'>
-                                adresse
-                            </label>
-                            <input type="text" class='col-md-5 col-sm-8'  id="adress">
-                        </div>
-                    </form>
-                    <div class=' col-lg-8 col-md-6 col-sm-12'>
-                        <form>
-                            <div class="form-row justify-content-around">
-                                
-                                    <input type='radio' name='payment-method' id="mastercard">
-                                    <label for="mastercard" class="w-25" control="mastercard"><img src="./img/cart/mastercard.svg" alt="mastercard" />  </label>
-                                
-                                    <input type='radio' id="visa" name='payment-method' control="visa">
-                                    <label for="visa" class="w-25"><img src="./img/cart/visa.svg" alt="visa" />  </label>
-                                
-
-                            </div>
-                            <div class="form-group">
-                                <label for="card-number" class="px-0 col-4">numéro de carte</label>
-                                <input type="text" pattern="\d{16}" name='card-number' id='card-number' class='col-7' />
-                            </div>
-                            <div class="form-group">
-                                <label for="card-name" class='px-0 col-4'>Titulaire</label>
-                                <input type="text" name='card-name' id='card-name' class="col-7" />
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-6">
-                                    <label for="card-expire">exp</label>
-                                    <input type="number" class="col-4" max="12" name='card-expire-month' id='card-expire' />
-                                    <input type="number" max="99" class="col-4" min="20" name='card-expire-year' id="card-expire-year"/>
+                    <div class="row">
+                        <div class="container">
+                            <form>
+                                <div class="form-row mt-1">
+                                    <label for='name' class="col-2">
+                                        Nom
+                                    </label>
+                                    <input type="text" class='col mx-2 form-control-sm' id="name" required>
+                                    <label for='first-name'>
+                                        Prénom
+                                    </label>
+                                    <input type="text" class='col mx-2 form-control-sm' id="first-name" required>
                                 </div>
-                                <div class='form-group col-6 justify-content-end'>
-                                    <label for='card-code'>code :</label>
-                                    <input type="password" pattern="\d{3}" id='card-code' name='card-code' class="col-4"/>
+                                <div class="form-row mt-1">
+                                    <label for='email' class="col-2">
+                                        email
+                                    </label>
+                                    <input type="email" class='col-5 mx-2 form-control-sm'  id="email" required>
                                 </div>
+                                <div class="form-row mt-1">
+                                    <label for='adress' class='col-2'>
+                                        adresse
+                                    </label>
+                                    <input type="text" class='col mx-2 form-control-sm'  id="adress" required>
+                                </div>
+                                <div class="form-row mt-1">
+                                        <label for='CP' class='col-2'>
+                                            CP
+                                        </label>
+                                        <input type="text" class='col-2 mx-2 form-control-sm'  id="CP" pattern="\d{5}" required>
+                                        <label for='city' class='col-2'>
+                                            Ville
+                                        </label>
+                                        <input type="text" class='col mx-2 form-control-sm'  id="city" name="city" required>
+                                    </div>
+        
+                                </div>
+                            </form>
+                        </div>
+                            <div class='row'>
+                                <form>
+                                    <div class="form-row justify-content-around">
+                                        
+                                            <input type='radio' name='payment-method' id="mastercard">
+                                            <label for="mastercard" class="w-25" control="mastercard"><img src="./img/cart/mastercard.svg" alt="mastercard" />  </label>
+                                        
+                                            <input type='radio' id="visa" name='payment-method' control="visa">
+                                            <label for="visa" class="w-25"><img src="./img/cart/visa.svg" alt="visa" />  </label>
+                                        
+        
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="card-number" class="px-0 col-4">numéro de carte</label>
+                                        <input type="text" pattern="\d{16}" name='card-number' maxlength="16" id='card-number' class='col-7 form-control-sm' />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="card-name" class='px-0 col-4'>Titulaire</label>
+                                        <input type="text" name='card-name' id='card-name' class="col-7 form-control-sm" />
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-6">
+                                            <label for="card-expire">exp</label>
+                                            <input type="text" class="col-4 form-control-sm" max="12" maxlength="2" name='card-expire-month' id='card-expire' />
+                                            <input type="text" max="99" class="col-4 form-control-sm" maxlength="2" min="20" name='card-expire-year' id="card-expire-year"/>
+                                        </div>
+                                        <div class='form-group col-6 justify-content-end'>
+                                            <label for='card-code'>code :</label>
+                                            <input type="text" pattern="\d{3}" maxlength="3" id='card-code' name='card-code' class="col-4 form-control-sm"/>
+                                        </div>
+                                    </div>
+        
+                                </form>
                             </div>
-
-                        </form>
-                    </div>
-                </div>
-        
-                <div class=" container col-lg-4 col-md-6 col-sm-12 position-sticky" id="in-cart-resume">
-                    <div class="row">
-                        <p>Total</p>
-                    </div>
-                    <div class="row">
-                        <p id="in-cart-total">
-        
-                        </p>
-                    </div>
-                    <div class="row">
-                        <button type="submit" class="btn-success btn">Passer commande</button>
+                        </div>
+                    
+                    <div class=" container col-lg-4 col-md-6 col-sm-12 position-sticky" id="in-cart-resume">
+                        <div class="row">
+                            <p>Total</p>
+                        </div>
+                        <div class="row">
+                            <p id="in-cart-total">
+            
+                            </p>
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn-success btn">Passer commande</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
 
         
          
