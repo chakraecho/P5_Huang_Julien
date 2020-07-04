@@ -11,10 +11,8 @@ let fetchGET = { //get
     method: 'GET',
     mode: 'cors'
 }
-let fetchPOST = { //post
-    method: 'GET',
-    mode: 'cors'
-}
+
+
 
 function refreshCart() {
     let cart_number = 0
@@ -80,7 +78,7 @@ function insHTML() {
                         <p>désignation</p>
                     </div>
                     <div class="col-md-4 text-center">
-                        <p>prix</p>
+                        <p>quantité</p>
                     </div>
                     <div class="col-md-3">
                         <p>sous-total</p>
@@ -154,7 +152,7 @@ function insHTML() {
                                     <label for='CP' class='col-2'>
                                         CP
                                     </label>
-                                    <input type="text" class='col-2 mx-2 form-control-sm' maxlength="5" name="CP" pattern="[0-9]{5}"
+                                    <input type="text" class='col-2 mx-2 form-control-sm' maxlength="5" id="CP" name="CP" pattern="[0-9]{5}"
                                         required>
                                     <label for='city' class='col-2'>
                                         Ville
@@ -167,14 +165,18 @@ function insHTML() {
 
                     `)
                     $('#payment').append(` 
-                    <div class="form-row justify-content-around">
+                    <div class="row mt-5">
+                        <p> Mode de paiement (pour la mise en page, données non transmis, non-required) </p>
+                    </div>
+                    <div class="form-row justify-content-center">
                             <input type='radio' name='payment-method' id="mastercard">
-                            <label for="mastercard" class="w-25" control="mastercard"><img
-                                    src="./img/cart/mastercard.svg" alt="mastercard" /> </label>
+                            <label for="mastercard" class="col-4 col-md-2" control="mastercard">
+                                <img src="./img/cart/mastercard.svg" class="mr-2" alt="mastercard" /> 
+                            </label>
 
-                            <input type='radio' id="visa" name='payment-method' control="visa">
-                            <label for="visa" class="w-25"><img src="./img/cart/visa.svg" alt="visa" /> </label>
-                        </div>
+                            <input type='radio' id="visa" name='payment-method' class="ml-2" control="visa">
+                            <label for="visa" class="col-4 col-md-2"><img src="./img/cart/visa.svg" alt="visa" /> </label>
+                    </div>
 
 
 
@@ -201,8 +203,41 @@ function insHTML() {
                                     class="col-4 form-control-sm" />
                             </div>
                         </div>
-                    </div>
+                    
                         `)
 
     }
 }
+
+var formContact = document.querySelector('#POSTdata')
+
+function stringifyPost(){
+    let name = document.querySelector('#name').value
+    let firstName = document.querySelector('#first-name').value
+    let email = document.querySelector('#email').value
+    let address = document.querySelector('#adress').value
+    let city = document.querySelector('#city').value
+    let contact = {
+        firstName : firstName,
+        lastName : name,
+        email : email,
+        address: address,
+        city: city
+    }
+    let products = itemsInCart
+    return JSON.stringify({contact, products})
+}
+
+
+formContact.addEventListener('click', function(e){ //submit
+    fetch('http://localhost:3000/api/teddies/order', {
+        method:'POST',
+        mode:'cors',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body: stringifyPost()
+    }).then(function(response){
+        alert(response.json())
+    }).catch(alert('fetch error'))
+}) 
