@@ -230,6 +230,7 @@ function stringifyPost(){
 
 
 formContact.addEventListener('click', function(e){ //submit
+    e.preventDefault()
     fetch('http://localhost:3000/api/teddies/order', {
         method:'POST',
         mode:'cors',
@@ -237,7 +238,13 @@ formContact.addEventListener('click', function(e){ //submit
             'Content-Type': 'application/json'
           },
         body: stringifyPost()
-    }).then(function(response){
-        alert(response.json())
-    }).catch(alert('fetch error'))
+    
+}).then(response => {
+    return response.json();
+  }).then(jsonResponse => {
+    console.log(jsonResponse)
+})
+    .catch((error)=>{
+        alert('fetch POST error : '+ error)
+    })
 }) 
