@@ -48,6 +48,31 @@ fetch(api, fetchGET)
             console.log('fetch errror:', error)
         }
     )
+function addOne(e){
+    let split = e.target.id.split('-')
+    for(let i = 0; i < itemsInCart.length; i++){
+        if(itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]){
+            itemsInCart[i].qty++
+        }
+    }
+}
+function removeOne(e){
+    let split = e.target.id.split('-')
+    for(let i = 0; i < itemsInCart.length; i++){
+        if(itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]){
+            itemsInCart[i].qty--
+        }
+    }
+}
+
+function deleteOne(e){
+    let split = e.target.id.split('-')
+    for(let i = 0; i < itemsInCart.length; i++){
+        if(itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]){
+            delete itemsInCart[i]
+        }
+    }
+}
 
 
 function insLocalStorage() {
@@ -66,6 +91,7 @@ function insLocalStorage() {
 
 }
 
+
 //is there smthng in cart ?????
 function insHTML() {
     console.log(objects)
@@ -79,7 +105,10 @@ function insHTML() {
                     <div class="col-md-5 text-center ">
                         <p>désignation</p>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-2 ">
+                    <p>couleur</p>
+                    </div>
+                    <div class="col-md-2 text-center">
                         <p>quantité</p>
                     </div>
                     <div class="col-md-3">
@@ -97,7 +126,7 @@ function insHTML() {
                 if (objects[i]._id == itemsInCart[j].id) {
                     $('#in-cart-list').append(
                         `
-                        <div class="col-12 in-cart-object">
+                        <div class="col-12 in-cart-object" data="${objects[i]._id}-${itemsInCart[j].color}">
                             <div class="row py-3">
                                 <div class="col-md-2 col-3">
                                     <img src="${objects[i].imageUrl}" class="w-100" alt="image de ${objects[i].name}">
@@ -106,14 +135,17 @@ function insHTML() {
                                     <div class="col-md-2 col-12">
                                     <p> ${objects[i].name} </p>
                                     </div>
-                                    <div class="col-md-5 text-center col-4">
-                                        <p>${itemsInCart[j].qty}</p>
+                                    <div class="col-md-2 col-12">
+                                    <p> ${itemsInCart[j].color} </p>
+                                    </div>
+                                    <div class="col-md-3 text-center col-4">
+                                        <p><button type="button" class="remove-one mr-1" id="${objects[i]._id}-${itemsInCart[j].color}">-</button>${itemsInCart[j].qty}<button type="button" class="add-one ml-1" id="${objects[i]._id}-${itemsInCart[j].color}">+</button></p>
                                     </div>
                                     <div class="col-md-4 col-6">
                                         <p> ${objects[i].price /100 * itemsInCart[j].qty} €</p>
                                     </div>
                                     <div class="col-md-1 col-2">
-                                        <span class="delete-button" id="${objects[i]._id}"></span>
+                                        <img class="delete-button w-50" id="${objects[i]._id}-${itemsInCart[j].color}" src="./img/cart/trash.svg" />
                                     </div>
                                 </div>
                                 
@@ -209,8 +241,19 @@ function insHTML() {
                         `)
 
     }
+    //add and removeOne
+    document.querySelector('.add-one').addEventListener('click', addOne)
+    document.querySelector('.remove-one').addEventListener('click', removeOne)
+    document.querySelector('.delete-button').addEventListener('click', deleteOne)
+
 }
 
+
+
+
+
+
+//POST to localhost:3000
 var formContact = document.querySelector('#POSTdata')
 
 function stringifyPost(){
@@ -253,3 +296,4 @@ formContact.addEventListener('click', function(e){ //submit
         alert('fetch POST error : '+ error)
     })
 }) 
+
