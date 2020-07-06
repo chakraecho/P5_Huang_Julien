@@ -20,25 +20,26 @@ function refreshCart(){
 function clickAddCart(){
 
     $('.add_cart').on('click', function (e) {//ADD CART on button listener
-        console.log(cart)
         let colorSelect = document.querySelector('#color-select_menu').value
-
-        if(itemsInCart.some(item => item.id == this.id)){
+        let isInCart = false
+        if(itemsInCart.length > 0){
             for(let i=0; i< itemsInCart.length;i++){
-                if(this.id === itemsInCart[i].id){
+                if(this.id === itemsInCart[i].id && colorSelect === itemsInCart[i].color){
                     console.log(this.id)
-                    if(colorSelect === itemsInCart[i].color){
                         itemsInCart[i].qty++
-                    }
-                    else{
-                        itemsInCart.push({'id' :this.id, 'color': colorSelect, 'qty': 1})
-                    }
+                        isInCart = true
                 }
+            }
+            if(isInCart == false){
+                itemsInCart.push({'id' :this.id, 'color': colorSelect, 'qty': 1})
+
             }
         }
         else{
             itemsInCart.push({'id' :this.id, 'color': colorSelect, 'qty': 1})
         }
+        console.log(itemsInCart)
+
         cart.setItem('inCart', JSON.stringify(itemsInCart))
         refreshCart();
     });

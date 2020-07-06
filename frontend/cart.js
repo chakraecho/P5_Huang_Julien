@@ -89,12 +89,12 @@ function insHTML() {
             </div>
             `
         )
-        for (id in itemsInCart) {
+        for (let j = 0; j < itemsInCart.length; j++) {
             console.log('boucle id ok')
-            console.log(id)
+            console.log(j)
             for (let i = 0; i < objects.length; i++) {
                 console.log('objets accedé')
-                if (objects[i]._id == itemsInCart[id]) {
+                if (objects[i]._id == itemsInCart[j].id) {
                     $('#in-cart-list').append(
                         `
                         <div class="col-12 in-cart-object">
@@ -107,10 +107,10 @@ function insHTML() {
                                     <p> ${objects[i].name} </p>
                                     </div>
                                     <div class="col-md-5 text-center col-4">
-                                        <p>${qtyInCart[i]}</p>
+                                        <p>${itemsInCart[j].qty}</p>
                                     </div>
                                     <div class="col-md-4 col-6">
-                                        <p> ${objects[i].price /100 * qtyInCart[i]} €</p>
+                                        <p> ${objects[i].price /100 * itemsInCart[j].qty} €</p>
                                     </div>
                                     <div class="col-md-1 col-2">
                                         <span class="delete-button" id="${objects[i]._id}"></span>
