@@ -14,11 +14,13 @@ let fetchGET = { //get
 
 
 
-function refreshCart() {
+function refreshCart(){
     let cart_number = 0
-    for (let i = 0; i < qtyInCart.length; i++) {
-        cart_number += qtyInCart[i]
-    }
+    itemsInCart.forEach(element => {
+        cart_number += element.qty
+    });
+    cart.setItem('inCart', JSON.stringify(itemsInCart))
+
     //numbers of items in cart to the nav bar
     $('#in_cart_count').html(cart_number)
 }
@@ -224,7 +226,10 @@ function stringifyPost(){
         address: address,
         city: city
     }
-    let products = itemsInCart
+    let products = []
+    for (i=0; i<itemsInCart.length;i++){
+        products.push(itemsInCart[i].id)
+    }
     return JSON.stringify({contact, products})
 }
 
