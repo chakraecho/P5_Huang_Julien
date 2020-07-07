@@ -56,12 +56,26 @@ body {
   width: 100%;
 }
 
+footer {
+  position: relative;
+  bottom: 0px;
+  width: 100%;
+  color: white;
+  font-size: 12px;
+}
+
 .brand {
   height: 2em;
 }
 
 .card-img-top {
   max-height: 200px;
+}
+
+.logo-img {
+  width: 3em;
+  position: absolute;
+  left: 50%;
 }
 
 /*# sourceMappingURL=style.css.map */
