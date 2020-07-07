@@ -14,7 +14,7 @@ let fetchGET = { //get
 
 
 
-function refreshCart(){
+function refreshCart() {
     let cart_number = 0
     itemsInCart.forEach(element => {
         cart_number += element.qty
@@ -48,31 +48,58 @@ fetch(api, fetchGET)
             console.log('fetch errror:', error)
         }
     )
-function addOne(e){
-    let split = e.target.id.split('-')
-    for(let i = 0; i < itemsInCart.length; i++){
-        if(itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]){
-            itemsInCart[i].qty++
-        }
-    }
+
+function updateQty(id, qty) {
+    document.querySelector("[data-qty='" + id + "']").innerHTML = qty
 }
-function removeOne(e){
+
+function addOne(e) {
     let split = e.target.id.split('-')
-    for(let i = 0; i < itemsInCart.length; i++){
-        if(itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]){
-            itemsInCart[i].qty--
+    for (let i = 0; i < itemsInCart.length; i++) {
+        if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
+            itemsInCart[i].qty++
+            cart.inCart = JSON.stringify(itemsInCart)
+            updateQty(e.target.id, itemsInCart[i].qty)
+            refreshCart();
         }
     }
 }
 
-function deleteOne(e){
+function removeOne(e) {
     let split = e.target.id.split('-')
-    for(let i = 0; i < itemsInCart.length; i++){
-        if(itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]){
-            delete itemsInCart[i]
+    for (let i = 0; i < itemsInCart.length; i++) {
+        if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
+            itemsInCart[i].qty--
+            cart.inCart = JSON.stringify(itemsInCart)
+            updateQty(e.target.id, itemsInCart[i].qty)
+            refreshCart();
+        }
+        if(itemsInCart == null == undefined || itemsInCart.length == 0){
+            document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
+            refreshCart();
         }
     }
 }
+
+function deleteOne(e) {
+    let split = e.target.id.split('-')
+    for (let i = 0; i < itemsInCart.length; i++) {
+        if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
+            itemsInCart.splice(i, 1)
+            cart.inCart = JSON.stringify(itemsInCart)
+            refreshCart();
+
+        }
+        if(itemsInCart == null == undefined || itemsInCart.length == 0){
+            document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
+            refreshCart();
+
+        }
+    }
+    document.querySelector('[data="' + e.target.id + '"]').remove()
+}
+
+
 
 
 function insLocalStorage() {
@@ -91,11 +118,34 @@ function insLocalStorage() {
 
 }
 
+function validationForm(){
+    let name = document.querySelector('#name').value
+    let firstName = document.querySelector('#first-name').value
+    let email = document.querySelector('#email').value
+    let address = document.querySelector('#adress').value
+    let city = document.querySelector('#city').value
+    let CP = document.querySelector('#CP').value
+    let regexMail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/
+    let regexCP = new RegExp('[0-9]{5}')
+    if(name.length < 2 || firstName.length < 2 || email.length < 2 || address.length <2 || city.length <2 || CP.length<2){
+        return false
+    }
+    else if(!regexMail.test(email)){
+        return false
+    }
+    else if(!regexCP.test(CP)){
+        return false
+    }
+    else{
+        return true
+    }
+}
+
 
 //is there smthng in cart ?????
 function insHTML() {
     console.log(objects)
-    if (cart == undefined || cart.length == 0) {
+    if (cart == undefined || cart.length == 0 || itemsInCart.length == 0 ||itemsInCart == null == undefined) {
         document.querySelector('#in-cart').innerHTML = "votre panier est vide !"
     } else {
         $('#in-cart-list').append(
@@ -139,7 +189,7 @@ function insHTML() {
                                     <p> ${itemsInCart[j].color} </p>
                                     </div>
                                     <div class="col-md-3 text-center col-4">
-                                        <p><button type="button" class="remove-one mr-1" id="${objects[i]._id}-${itemsInCart[j].color}">-</button>${itemsInCart[j].qty}<button type="button" class="add-one ml-1" id="${objects[i]._id}-${itemsInCart[j].color}">+</button></p>
+                                        <p><button type="button" class="remove-one mr-1" id="${objects[i]._id}-${itemsInCart[j].color}">-</button><span data-qty="${objects[i]._id}-${itemsInCart[j].color}">${itemsInCart[j].qty}</span><button type="button" class="add-one ml-1" id="${objects[i]._id}-${itemsInCart[j].color}">+</button></p>
                                     </div>
                                     <div class="col-md-4 col-6">
                                         <p> ${objects[i].price /100 * itemsInCart[j].qty} €</p>
@@ -159,28 +209,27 @@ function insHTML() {
         }
         $('#contact-form').append(`
                     <div class="container">
-
                                 <div class="form-row mt-1">
                                     <label for='name' class="col-2">
                                         Nom
                                     </label>
-                                    <input type="text" class='col mx-2 form-control-sm' id="name" required>
+                                    <input type="text" required class='col mx-2 form-control-sm' id="name"  />
                                     <label for='first-name'>
                                         Prénom
                                     </label>
-                                    <input type="text" class='col mx-2 form-control-sm' id="first-name" required>
+                                    <input type="text" class='col mx-2 form-control-sm' required id="first-name" />
                                 </div>
                                 <div class="form-row mt-1">
                                     <label for='email' class="col-2">
                                         email
                                     </label>
-                                    <input type="email" class='col-5 mx-2 form-control-sm' id="email" required>
+                                    <input type="email" class='col-5 mx-2 form-control-sm'required  id="email" />
                                 </div>
                                 <div class="form-row mt-1">
                                     <label for='adress' class='col-2'>
                                         adresse
                                     </label>
-                                    <input type="text" class='col mx-2 form-control-sm' id="adress" required>
+                                    <input type="text" class='col mx-2 form-control-sm' required id="adress" />
                                 </div>
                                 <div class="form-row mt-1">
                                     <label for='CP' class='col-2'>
@@ -191,14 +240,14 @@ function insHTML() {
                                     <label for='city' class='col-2'>
                                         Ville
                                     </label>
-                                    <input type="text" class='col mx-2 form-control-sm' id="city" name="city" required>
+                                    <input type="text" class='col mx-2 form-control-sm' required id="city" name="city" />
                                 </div>
 
                             </div>
-                            
+                    </div>
 
                     `)
-                    $('#payment').append(` 
+        $('#payment').append(` 
                     <div class="row mt-5">
                         <p> Mode de paiement (pour la mise en page, données non transmis, non-required) </p>
                     </div>
@@ -241,10 +290,17 @@ function insHTML() {
                         `)
 
     }
-    //add and removeOne
-    document.querySelector('.add-one').addEventListener('click', addOne)
-    document.querySelector('.remove-one').addEventListener('click', removeOne)
-    document.querySelector('.delete-button').addEventListener('click', deleteOne)
+    //add remove and delete
+
+    for (let i = 0; i < document.getElementsByClassName('add-one').length; i++) {
+        document.getElementsByClassName('add-one')[i].addEventListener('click', addOne)
+    }
+    for (let i = 0; i < document.getElementsByClassName('remove-one').length; i++) {
+        document.getElementsByClassName('remove-one')[i].addEventListener('click', removeOne)
+    }
+    for (let i = 0; i < document.getElementsByClassName('delete-button').length; i++) {
+        document.getElementsByClassName('delete-button')[i].addEventListener('click', deleteOne)
+    }
 
 }
 
@@ -256,44 +312,51 @@ function insHTML() {
 //POST to localhost:3000
 var formContact = document.querySelector('#POSTdata')
 
-function stringifyPost(){
+function stringifyPost() {
     let name = document.querySelector('#name').value
     let firstName = document.querySelector('#first-name').value
     let email = document.querySelector('#email').value
     let address = document.querySelector('#adress').value
     let city = document.querySelector('#city').value
     let contact = {
-        firstName : firstName,
-        lastName : name,
-        email : email,
+        firstName: firstName,
+        lastName: name,
+        email: email,
         address: address,
         city: city
     }
     let products = []
-    for (i=0; i<itemsInCart.length;i++){
+    for (i = 0; i < itemsInCart.length; i++) {
         products.push(itemsInCart[i].id)
     }
-    return JSON.stringify({contact, products})
+    return JSON.stringify({
+        contact,
+        products
+    })
 }
 
 
-formContact.addEventListener('click', function(e){ //submit
-    e.preventDefault()
-    fetch('http://localhost:3000/api/teddies/order', {
-        method:'POST',
-        mode:'cors',
-        headers: {
-            'Content-Type': 'application/json'
-          },
-        body: stringifyPost()
-    
-}).then(response => {
-    return response.json();
-  }).then(jsonResponse => {
-    console.log(jsonResponse)
-})
-    .catch((error)=>{
-        alert('fetch POST error : '+ error)
-    })
-}) 
+formContact.addEventListener('click', function (e) { //submit
+    if(validationForm() == true){
+        e.preventDefault();
+        fetch('http://localhost:3000/api/teddies/order', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: stringifyPost()
 
+        }).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            console.log(jsonResponse)
+            sessionStorage.setItem('confirmation',JSON.stringify(itemsInCart))
+            sessionStorage.setItem('contact', JSON.stringify(jsonResponse.contact))
+            window.location.href = './order.html?confirmation='+jsonResponse.orderId
+        })
+        .catch((error) => {
+            alert('fetch POST error : ' + error)
+        })
+    }
+})
