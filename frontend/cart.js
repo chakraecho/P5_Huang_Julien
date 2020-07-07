@@ -111,6 +111,29 @@ function insLocalStorage() {
 
 }
 
+function validationForm(){
+    let name = document.querySelector('#name').value
+    let firstName = document.querySelector('#first-name').value
+    let email = document.querySelector('#email').value
+    let address = document.querySelector('#adress').value
+    let city = document.querySelector('#city').value
+    let CP = document.querySelector('#CP').value
+    let regexMail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/
+    let regexCP = new RegExp('[0-9]{5}')
+    if(name.length < 2 || firstName.length < 2 || email.length < 2 || address.length <2 || city.length <2 || CP.length<2){
+        return false
+    }
+    else if(!regexMail.test(email)){
+        return false
+    }
+    else if(!regexCP.test(CP)){
+        return false
+    }
+    else{
+        return true
+    }
+}
+
 
 //is there smthng in cart ?????
 function insHTML() {
@@ -307,7 +330,9 @@ function stringifyPost() {
 
 
 formContact.addEventListener('click', function (e) { //submit
-    fetch('http://localhost:3000/api/teddies/order', {
+    if(validationForm() == true){
+        e.preventDefault();
+        fetch('http://localhost:3000/api/teddies/order', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -319,8 +344,11 @@ formContact.addEventListener('click', function (e) { //submit
             return response.json();
         }).then(jsonResponse => {
             console.log(jsonResponse)
+            sessionStorage.setItem('confirmation',JSON.stringify(itemsInCart))
+            window.location.href = './order.html?confirmation='+jsonResponse.orderId
         })
         .catch((error) => {
             alert('fetch POST error : ' + error)
         })
+    }
 })
