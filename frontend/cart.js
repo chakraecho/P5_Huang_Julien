@@ -60,6 +60,7 @@ function addOne(e) {
             itemsInCart[i].qty++
             cart.inCart = JSON.stringify(itemsInCart)
             updateQty(e.target.id, itemsInCart[i].qty)
+            refreshCart();
         }
     }
 }
@@ -71,9 +72,11 @@ function removeOne(e) {
             itemsInCart[i].qty--
             cart.inCart = JSON.stringify(itemsInCart)
             updateQty(e.target.id, itemsInCart[i].qty)
+            refreshCart();
         }
         if(itemsInCart == null == undefined || itemsInCart.length == 0){
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
+            refreshCart();
         }
     }
 }
@@ -84,9 +87,13 @@ function deleteOne(e) {
         if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
             itemsInCart.splice(i, 1)
             cart.inCart = JSON.stringify(itemsInCart)
+            refreshCart();
+
         }
         if(itemsInCart == null == undefined || itemsInCart.length == 0){
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
+            refreshCart();
+
         }
     }
     document.querySelector('[data="' + e.target.id + '"]').remove()
@@ -167,7 +174,7 @@ function insHTML() {
             for (let i = 0; i < objects.length; i++) {
                 console.log('objets accedé')
                 if (objects[i]._id == itemsInCart[j].id) {
-                    $('#in-cart-list').html(
+                    $('#in-cart-list').append(
                         `
                         <div class="col-12 in-cart-object" data="${objects[i]._id}-${itemsInCart[j].color}">
                             <div class="row py-3">

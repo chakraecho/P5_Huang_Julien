@@ -25,13 +25,6 @@
                             <div class="wrapper-count">
                                 <!-- wrapper for span position-->
                                 <img src="img/logo.png" id="in_cart" alt="panier" class="brand" />
-                                <span id="in_cart_count"></span>
-                                <span id="in_cart_popover">
-                                    <p>Dans le panier :</p>
-                                    <div class="row" id="in_cart_content">
-                                        <!-- popover to show in cart items-->
-                                    </div>
-                                </span>
                             </div>
                         </a>
 
@@ -55,10 +48,25 @@
                     <h3>Récapitulatif de votre commande :</h3>
                 </div>
                 <div class='row' id='ins-recap'>
-
+                    <div class='row justify-content-between'>
+                        <div class='col-3 text-center'>
+                            nom
+                        </div>
+                        <div class='col-3 text-center'>
+                            couleur
+                        </div>
+                        <div class='col-3 text-center'>
+                            quantité
+                        </div>
+                        <div class='col-3 text-center'>
+                            prix
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <script src='order.js' charset="utf-8"></script>
 </body>
 </html>
