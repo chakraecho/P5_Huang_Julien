@@ -352,6 +352,7 @@ formContact.addEventListener('click', function (e) { //submit
         }).then(jsonResponse => {
             console.log(jsonResponse)
             sessionStorage.setItem('confirmation',JSON.stringify(itemsInCart))
+            sessionStorage.setItem('contact', JSON.stringify(jsonResponse.contact))
             window.location.href = './order.html?confirmation='+jsonResponse.orderId
         })
         .catch((error) => {

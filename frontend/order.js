@@ -29,3 +29,24 @@ for (let i = 0; i < items.length; i++) {
         }
     }
 }
+//info desti
+let infoDesti = document.querySelector('#infos-dest')
+let contact = JSON.parse(sessionStorage.contact)
+
+infoDesti.insertAdjacentHTML('beforeend',`
+    <div class='row'>
+        destinaire: ${contact.lastName} ${contact.firstName}
+    </div>
+    <div class='row'>
+        email: ${contact.email}
+    </div>
+    <div class='row'>
+        adresse: ${contact.address}
+    </div>
+    <div class='row'>
+        ville: ${contact.city}
+    </div>
+`)
+
+sessionStorage.clear();
+localStorage.clear();
