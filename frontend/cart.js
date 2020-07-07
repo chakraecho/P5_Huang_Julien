@@ -24,6 +24,11 @@ function refreshCart() {
     //numbers of items in cart to the nav bar
     $('#in_cart_count').html(cart_number)
 }
+function sStorage(){
+    if(sessionStorage.items == undefined || sessionStorage.items.length == 0){
+        sessionStorage.setItem('items', JSON.stringify(objects))
+    }
+}
 
 fetch(api, fetchGET)
     .then(
@@ -34,6 +39,7 @@ fetch(api, fetchGET)
                         console.log(data)
                         console.log('GET effectué')
                         objects = data
+                        sStorage();
                         insLocalStorage();
                         insHTML();
                     }
@@ -49,8 +55,9 @@ fetch(api, fetchGET)
         }
     )
 
-function updateQty(id, qty) {
+function updateQty(id, qty, price) {
     document.querySelector("[data-qty='" + id + "']").innerHTML = qty
+    document.querySelector("[data-total='"+ id +"']").innerHTML = qty * price / 100 + ' €'
 }
 
 function addOne(e) {
@@ -59,7 +66,7 @@ function addOne(e) {
         if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
             itemsInCart[i].qty++
             cart.inCart = JSON.stringify(itemsInCart)
-            updateQty(e.target.id, itemsInCart[i].qty)
+            updateQty(e.target.id, itemsInCart[i].qty, objects[i].price)
             refreshCart();
         }
     }
@@ -71,7 +78,7 @@ function removeOne(e) {
         if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
             itemsInCart[i].qty--
             cart.inCart = JSON.stringify(itemsInCart)
-            updateQty(e.target.id, itemsInCart[i].qty)
+            updateQty(e.target.id, itemsInCart[i].qty, objects[i].price)
             refreshCart();
         }
         if(itemsInCart == null == undefined || itemsInCart.length == 0){
@@ -192,7 +199,7 @@ function insHTML() {
                                         <p><button type="button" class="remove-one mr-1" id="${objects[i]._id}-${itemsInCart[j].color}">-</button><span data-qty="${objects[i]._id}-${itemsInCart[j].color}">${itemsInCart[j].qty}</span><button type="button" class="add-one ml-1" id="${objects[i]._id}-${itemsInCart[j].color}">+</button></p>
                                     </div>
                                     <div class="col-md-4 col-6">
-                                        <p> ${objects[i].price /100 * itemsInCart[j].qty} €</p>
+                                        <p data-total="${objects[i]._id}-${itemsInCart[j].color}"> ${objects[i].price /100 * itemsInCart[j].qty} €</p>
                                     </div>
                                     <div class="col-md-1 col-2">
                                         <img class="delete-button w-50" id="${objects[i]._id}-${itemsInCart[j].color}" src="./img/cart/trash.svg" />
