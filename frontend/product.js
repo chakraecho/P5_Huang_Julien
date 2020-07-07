@@ -60,7 +60,7 @@ function clickAddCart(){
             let product = JSON.parse(this.responseText)
             console.log(this.responseText)
             console.log(product)
-            $('title').html("oribear "+product.name)
+            $('title').html("oribear - "+product.name)
             $('#product-title').html(product.name)
             $('#product_body').append(`
             <img class="col-sm-6 col-md-3 offset-md-1" src="${product.imageUrl}" alt="image de ${product.name}"/>

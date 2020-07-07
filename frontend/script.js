@@ -8,12 +8,14 @@ let storedItems
 
 function refreshCart(){
     let cart_number = 0
-    if(localStorage.length == 0 ||localStorage == null ||localStorage==undefined){
+    if(localStorage.length == 0 || localStorage.inCart ==undefined){
         $('#in_cart_count').html(0)
 
     }
     else{
+        itemsInCart = JSON.parse(cart.inCart)
         itemsInCart.forEach(element => {
+            console.log(element)
             cart_number += element.qty
         });
     }
