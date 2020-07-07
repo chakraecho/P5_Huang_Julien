@@ -5,22 +5,27 @@ document.querySelector('h2').innerHTML = 'commande n°' + orderID
 //ins-recap insertion => sum of order
 let insRecap = document.querySelector('#ins-recap')
 let items = JSON.parse(localStorage.inCart)
+let objects = JSON.parse(sessionStorage.items)
 
 for (let i = 0; i < items.length; i++) {
-    insRecap.insertAdjacentHTML('beforeend', `
-    <div class='row'>
-        <div class='col-3 text-center'>
-            ${items[i].name}
-        </div>
-        <div class='col-3 text-center'>
-            ${items[i].color}r
-        </div>
-        <div class='col-3 text-center'>
-            ${items[i].qty}
-        </div>
-        <div class='col-3 text-center'>
-            ${items[i].qty * items[i].price}
-        </div>
-    </div>
-    `)
+    for (let j = 0; j< objects.length; j++){
+        if(items[i].id == objects[j]._id){
+            insRecap.insertAdjacentHTML('beforeend', `
+            <div class='row'>
+                <div class='col-3 text-center'>
+                    ${objects[j].name}
+                </div>
+                <div class='col-3 text-center'>
+                    ${items[i].color}
+                </div>
+                <div class='col-3 text-center'>
+                    ${items[i].qty}
+                </div>
+                <div class='col-3 text-center'>
+                    ${items[i].qty * objects[j].price /100}€
+                </div>
+            </div>
+            `)
+        }
+    }
 }
