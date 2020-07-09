@@ -66,12 +66,21 @@
         }
     }
 }
-
+//remove btn focus
+.btn-outline-info.focus, .btn-outline-info:focus {
+    outline: none;
+    box-shadow: none;
+  }
 //footer
+body{
+    min-height:100vh;
+    position: relative;
+    padding-bottom: 7em;
+}
 footer{
-    position: absolute;
-    bottom: 0px;
+
     width:100%;
     color:white;
     font-size: 12px;
+    position: absolute; bottom:0px;
 }

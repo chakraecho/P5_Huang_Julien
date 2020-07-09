@@ -15,24 +15,29 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <img src="./img/logo.png" alt='logo oribear' class='justify-self-center logo-img'/>
+            <img src="./img/logo.png" alt='logo oribear' class='navbar-brand justify-self-center logo-img'/>
+    
             <div id="navbarContent" class="bg-dark collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="index.html">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">
-                            <div class="wrapper-count">
-                                <!-- wrapper for span position-->
-                                <img src="img/cart.png" id="in_cart" alt="panier" class="brand" />
-                            </div>
+                        <a class="nav-link" href="./cart.html">
+                        <div class="wrapper-count"><!-- wrapper for span position-->
+                            <img src="img/cart.png" id="in_cart" alt="panier" class="brand" />
+                            <span id="in_cart_count"></span>
+                            <span id="in_cart_popover">
+                                <p>Dans le panier :</p>
+                                <div class="row" id="in_cart_content"> <!-- popover to show in cart items-->
+                            </div>  
+                            </span>
+                        </div>
                         </a>
-
+               
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href=""><img src="img/user.svg" alt="mon compte" class="brand"
-                                id="cart" /></a>
+                        <a class="nav-link" href=""><img src="img/user.svg" alt="mon compte" class="brand" id="cart"/></a>
                     </li>
                 </ul>
             </div>
@@ -100,6 +105,8 @@
             </div>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src='order.js' charset="utf-8"></script>
 </body>
 </html>

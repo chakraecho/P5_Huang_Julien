@@ -56,12 +56,23 @@ body {
   width: 100%;
 }
 
+.btn-outline-info.focus, .btn-outline-info:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 7em;
+}
+
 footer {
-  position: absolute;
-  bottom: 0px;
   width: 100%;
   color: white;
   font-size: 12px;
+  position: absolute;
+  bottom: 0px;
 }
 
 .brand {
@@ -75,7 +86,10 @@ footer {
 .logo-img {
   width: 3em;
   position: absolute;
-  left: 50%;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  top: 0px;
 }
 
 /*# sourceMappingURL=style.css.map */

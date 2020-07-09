@@ -14,6 +14,7 @@ let fetchGET = { //get
 
 
 
+
 function refreshCart() {
     let cart_number = 0
     itemsInCart.forEach(element => {
@@ -23,6 +24,15 @@ function refreshCart() {
 
     //numbers of items in cart to the nav bar
     $('#in_cart_count').html(cart_number)
+
+    //total price
+    let total = 0;
+    document.querySelectorAll('[data-total]').forEach(element =>{
+        total +=  parseInt(element.innerHTML.split(' ')[0])
+        console.log(element.innerHTML.split(' ')[0])
+    })
+    document.querySelector('#in-cart-total').innerHTML = total + ' €'
+
 }
 function sStorage(){
     if(sessionStorage.items == undefined || sessionStorage.items.length == 0){
@@ -66,8 +76,12 @@ function addOne(e) {
         if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
             itemsInCart[i].qty++
             cart.inCart = JSON.stringify(itemsInCart)
-            updateQty(e.target.id, itemsInCart[i].qty, objects[i].price)
-            refreshCart();
+            for(let j=0; j< objects.length; j++){
+                if(itemsInCart[i].id == objects[j]._id){
+                    updateQty(e.target.id, itemsInCart[i].qty, objects[j].price)
+                    refreshCart();
+                }
+            }
         }
     }
 }
@@ -78,8 +92,17 @@ function removeOne(e) {
         if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
             itemsInCart[i].qty--
             cart.inCart = JSON.stringify(itemsInCart)
-            updateQty(e.target.id, itemsInCart[i].qty, objects[i].price)
-            refreshCart();
+            for(let j=0; j< objects.length; j++){
+                if(itemsInCart[i].id == objects[j]._id){
+                    updateQty(e.target.id, itemsInCart[i].qty, objects[j].price)
+                    refreshCart();
+                }
+            }
+            if(itemsInCart[i].qty <=0 ){
+                itemsInCart.splice(i, 1)
+                document.querySelector('[data="' + e.target.id + '"]').remove()
+
+            }
         }
         if(itemsInCart == null == undefined || itemsInCart.length == 0){
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
@@ -100,10 +123,10 @@ function deleteOne(e) {
         if(itemsInCart == null == undefined || itemsInCart.length == 0){
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
             refreshCart();
-
         }
     }
     document.querySelector('[data="' + e.target.id + '"]').remove()
+    refreshCart();
 }
 
 
@@ -181,6 +204,7 @@ function insHTML() {
             for (let i = 0; i < objects.length; i++) {
                 console.log('objets accedé')
                 if (objects[i]._id == itemsInCart[j].id) {
+                    console.log(objects[i].price, itemsInCart[j].qty)
                     $('#in-cart-list').append(
                         `
                         <div class="col-12 in-cart-object" data="${objects[i]._id}-${itemsInCart[j].color}">
@@ -189,17 +213,17 @@ function insHTML() {
                                     <img src="${objects[i].imageUrl}" class="w-100" alt="image de ${objects[i].name}">
                                 </div>
                                 <div class="col-md-10 col-9  d-flex flex-row flex-wrap">
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-2 col-6">
                                     <p> ${objects[i].name} </p>
                                     </div>
-                                    <div class="col-md-2 col-12">
+                                    <div class="col-md-2 col-6">
                                     <p> ${itemsInCart[j].color} </p>
                                     </div>
-                                    <div class="col-md-3 text-center col-4">
-                                        <p><button type="button" class="remove-one mr-1" id="${objects[i]._id}-${itemsInCart[j].color}">-</button><span data-qty="${objects[i]._id}-${itemsInCart[j].color}">${itemsInCart[j].qty}</span><button type="button" class="add-one ml-1" id="${objects[i]._id}-${itemsInCart[j].color}">+</button></p>
+                                    <div class="col-md-3 text-center col-5">
+                                        <p><button type="button" class="btn-outline-info remove-one mr-1" id="${objects[i]._id}-${itemsInCart[j].color}">-</button><span data-qty="${objects[i]._id}-${itemsInCart[j].color}">${itemsInCart[j].qty}</span><button type="button" class="btn-outline-info add-one ml-1" id="${objects[i]._id}-${itemsInCart[j].color}">+</button></p>
                                     </div>
-                                    <div class="col-md-4 col-6">
-                                        <p data-total="${objects[i]._id}-${itemsInCart[j].color}"> ${objects[i].price /100 * itemsInCart[j].qty} €</p>
+                                    <div class="col-md-4 col-4">
+                                        <p data-total="${objects[i]._id}-${itemsInCart[j].color}">${objects[i].price * itemsInCart[j].qty /100} €</p>
                                     </div>
                                     <div class="col-md-1 col-2">
                                         <img class="delete-button w-50" id="${objects[i]._id}-${itemsInCart[j].color}" src="./img/cart/trash.svg" />
@@ -210,7 +234,6 @@ function insHTML() {
                         </div>
                         `
                     )
-                    console.log('condition if ok')
                 }
             }
         }
@@ -230,7 +253,7 @@ function insHTML() {
                                     <label for='email' class="col-2">
                                         email
                                     </label>
-                                    <input type="email" class='col-5 mx-2 form-control-sm'required  id="email" />
+                                    <input type="email" class='col mx-2 form-control-sm'required  id="email" />
                                 </div>
                                 <div class="form-row mt-1">
                                     <label for='adress' class='col-2'>
@@ -294,9 +317,12 @@ function insHTML() {
                             </div>
                         </div>
                     
-                        `)
+        `)
+        
 
     }
+
+    refreshCart();
     //add remove and delete
 
     for (let i = 0; i < document.getElementsByClassName('add-one').length; i++) {
