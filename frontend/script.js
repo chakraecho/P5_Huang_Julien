@@ -5,15 +5,22 @@ const api = "http://localhost:3000/api/teddies"
 let cart = localStorage
 let itemsInCart = [];//create array for items
 let storedItems
+//fetch method
+let fetchGET = { //get
+    method: 'GET',
+    mode: 'cors'
+}
 
 function refreshCart(){
     let cart_number = 0
-    if(localStorage.length == 0 ||localStorage == null ||localStorage==undefined){
+    if(localStorage.length == 0 || localStorage.inCart ==undefined){
         $('#in_cart_count').html(0)
 
     }
     else{
+        itemsInCart = JSON.parse(cart.inCart)
         itemsInCart.forEach(element => {
+            console.log(element)
             cart_number += element.qty
         });
     }
@@ -48,7 +55,33 @@ function insItems(){
     `);
     })
 }
+
+
 if(sessionStorage.items == null || sessionStorage.items == undefined || sessionStorage.items.length == 0){
+
+    fetch(api, fetchGET ).then(
+        (response)=>{
+            response.json().then(
+                data => {
+                    console.log(response.length)//number of object available
+                    console.log(response[1])//test request
+                    storedItems = data
+                    if (data.length > 0) {//if teddy in stock
+                        sessionStorage.setItem('items', JSON.stringify(data))
+                        insItems();
+            
+                    }
+                    else if (data.length === 0) {//if no teddy in stock
+                        $('#objectList').html("Il n'y a plus d'article disponible!")
+                    }
+                }
+            )
+        }
+    )
+    .catch(error => {
+        document.querySelector('.listed-Object').innerHTML = error
+    });
+/*
     //request GET to api
     var req = new XMLHttpRequest
     req.open('GET', api)
@@ -57,7 +90,7 @@ if(sessionStorage.items == null || sessionStorage.items == undefined || sessionS
     
         refreshCart()
     
-        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+        if (this.readyState == XMLHttpRequest.DONE && this.status >= 200 < 300 ) {
             response = JSON.parse(this.responseText)
             console.log(response.length)//number of object available
             console.log(response[1])//test request
@@ -71,10 +104,10 @@ if(sessionStorage.items == null || sessionStorage.items == undefined || sessionS
                 $('#objectList').html("Il n'y a plus d'article disponible!")
             }
         }
-        else if (this.status == 404) {//if error
-            $('#objectList').html("Erreur 404, liste non reçu !")
+        else {//if error
+            $('#objectList').html("Erreur serveur")
         }
-    }
+    }*/
     }
     else{
         storedItems = JSON.parse(sessionStorage.items)
