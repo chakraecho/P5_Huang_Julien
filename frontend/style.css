@@ -43,6 +43,10 @@ a {
   width: 100%;
 }
 
+nav {
+  max-height: 4em;
+}
+
 .wrapper-count {
   width: max-content;
   height: max-content;
@@ -101,19 +105,20 @@ a {
 body {
   min-height: 100vh;
   position: relative;
-  padding-bottom: 7em;
 }
 
 footer {
   width: 100%;
   color: white;
   font-size: 12px;
-  position: absolute;
-  bottom: 0px;
 }
 
 .width-max-content {
   width: max-content;
+}
+
+.delete-button:hover {
+  cursor: pointer;
 }
 
 .brand {
@@ -133,9 +138,21 @@ footer {
   top: 0px;
 }
 
+#product-description {
+  background: #ffecb3;
+  padding: 20px;
+  border-radius: 20px;
+  border: 5px solid gray;
+}
+
 @media (min-width: 991.98px) {
   .position-md-fixed {
     position: fixed;
+  }
+
+  .mt-md-auto {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
   }
 }
 

@@ -8,7 +8,9 @@
         }
     }
 }
-
+nav{
+    max-height: 4em;
+}
 //items in cart
 .wrapper-count {
     width: max-content;
@@ -75,16 +77,18 @@
 body{
     min-height:100vh;
     position: relative;
-    padding-bottom: 7em;
 }
 footer{
 
     width:100%;
     color:white;
     font-size: 12px;
-    position: absolute; bottom:0px;
 }
 
 .width-max-content{
     width:max-content
+}
+
+.delete-button:hover{
+    cursor:pointer;
 }
