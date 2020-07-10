@@ -176,7 +176,7 @@ function validationForm(){
 function insHTML() {
     console.log(objects)
     if (cart == undefined || cart.length == 0 || itemsInCart.length == 0 ||itemsInCart == null == undefined) {
-        document.querySelector('#in-cart').innerHTML = "votre panier est vide !"
+        document.querySelector('#in-cart').innerHTML = "Votre panier est vide.... (ou presque !)"
     } else {
         $('#in-cart-list').append(
             `

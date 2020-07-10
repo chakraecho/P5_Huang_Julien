@@ -43,10 +43,6 @@ a {
   width: 100%;
 }
 
-nav {
-  max-height: 4em;
-}
-
 .wrapper-count {
   width: max-content;
   height: max-content;

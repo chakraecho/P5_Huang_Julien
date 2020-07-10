@@ -156,4 +156,4 @@ else{
     insHTML();
 }
 
-    
+refreshCart();
