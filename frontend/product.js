@@ -54,7 +54,7 @@ function insHTML(){
     $('title').html("oribear - "+product.name)
     $('#product-title').html(product.name)
     $('#product_body').append(`
-    <img class="col-sm-6 col-md-3 offset-md-1" src="${product.imageUrl}" alt="image de ${product.name}"/>
+    <img class="col-sm-6 col-md-3 p-0 border border-secondary offset-md-1" src="${product.imageUrl}" alt="image de ${product.name}"/>
     <p class="col-md-4 col-sm-8" id="product_description">${product.description}</p>
     <div class="col-md-3 col-sm-10 d-flex flex-column justify-content-between align-items-center" id="product_cart_col">
         <form id="color-select">

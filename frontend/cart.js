@@ -181,7 +181,7 @@ function insHTML() {
         $('#in-cart-list').append(
             `
             <div class="col-md-10 col-sm-12 d-none d-md-block">
-                <div class="row">
+                <div class="row border-bottom border-light">
                     <div class="col-md-5 text-center ">
                         <p>désignation</p>
                     </div>
@@ -208,9 +208,9 @@ function insHTML() {
                     $('#in-cart-list').append(
                         `
                         <div class="col-12 in-cart-object" data="${objects[i]._id}-${itemsInCart[j].color}">
-                            <div class="row py-3">
+                            <div class="row py-3 border-top border-bottom border-light ">
                                 <div class="col-md-2 col-3">
-                                    <img src="${objects[i].imageUrl}" class="w-100" alt="image de ${objects[i].name}">
+                                    <img src="${objects[i].imageUrl}" class="w-100 border border-secondary" alt="image de ${objects[i].name}">
                                 </div>
                                 <div class="col-md-10 col-9  d-flex flex-row flex-wrap">
                                     <div class="col-md-2 col-6">
@@ -279,7 +279,7 @@ function insHTML() {
                     `)
         $('#payment').append(` 
                     <div class="row mt-5">
-                        <p> Mode de paiement (pour la mise en page, données non transmis, non-required) </p>
+                        <p> Mode de paiement (API non implémenté, input non-requis) </p>
                     </div>
                     <div class="form-row justify-content-center">
                             <input type='radio' name='payment-method' id="mastercard">

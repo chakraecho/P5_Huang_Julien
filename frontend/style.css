@@ -1,5 +1,42 @@
+@font-face {
+  font-family: "lilitaOne";
+  src: url("./assets/font/LilitaOne.ttf");
+}
+@font-face {
+  font-family: "disney";
+  src: url("./assets/font/waltograph42.otf"), url("./assets/font/waltographUI.ttf") format("truetype");
+}
+@font-face {
+  font-family: "actionMan";
+  src: url("./assets/font/Action_Man_Shaded-webfont.eot");
+  src: url("./assets/font/Action_Man_Shaded-webfont.eot?#iefix") format("embedded-opentype"), url("./assets/font/Action_Man_Shaded-webfont.woff") format("woff"), url("./assets/font/Action_Man_Shaded-webfont.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+  font-family: "lilitaOne";
+}
+
 body {
   background-color: #b3e5fc;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-family: "lilitaOne", "disney", "actionMan", "american typewriter";
+}
+
+h2 {
+  font-family: "actionMan", "american typewriter";
+}
+
+p {
+  font-size: 16px;
+}
+
+a {
+  font-family: "sans-serif";
 }
 
 .listed-object div div img {
@@ -75,6 +112,10 @@ footer {
   bottom: 0px;
 }
 
+.width-max-content {
+  width: max-content;
+}
+
 .brand {
   height: 2em;
 }
@@ -90,6 +131,12 @@ footer {
   right: 0px;
   margin: auto;
   top: 0px;
+}
+
+@media (min-width: 991.98px) {
+  .position-md-fixed {
+    position: fixed;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

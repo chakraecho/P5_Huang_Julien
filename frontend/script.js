@@ -32,9 +32,9 @@ function insItems(){
     storedItems.forEach((element, index) => {//insert all teddies in a list
         //insert card
         $('#objectList').append(`
-        <div class="card col-md-5 align-content-between col-sm-8 p-0 ml-2 mr-2 mb-2" id="card_' + index + '"data-id=" ${storedItems[index]._id}">
+        <div class="card col-md-5 align-content-between col-8 mx-auto p-0 ml-2 mr-2 mb-2" id="card_' + index + '"data-id=" ${storedItems[index]._id}">
                 <a href="./product.html?${storedItems[index]._id}" >
-                    <img class="card-img-top" id="card-img_' + index + '" alt="image de ${storedItems[index].name}" src="${storedItems[index].imageUrl}"/>
+                    <img class="card-img-top border border-light" id="card-img_' + index + '" alt="image de ${storedItems[index].name}" src="${storedItems[index].imageUrl}"/>
                 </a>
                 <div class="card-body" id="card-body_${index}"> 
                     <a href="./product.html?${storedItems[index]._id}" >
