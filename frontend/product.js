@@ -90,23 +90,28 @@ function insHTML(){
 
 function insPopover(){
     document.querySelector('#in_cart_popover').innerHTML = ''
-    
-    itemsInCart.forEach((element, index)=>{
-        for(let i =0; i < storedItems.length; i++){
-            if(itemsInCart[index].id == storedItems[i]._id){
-                document.querySelector('#in_cart_popover').insertAdjacentHTML('beforeend',`
-                    <div class='row'>
-                        <div class="col-6">
-                            ${storedItems[i].name} ${itemsInCart[index].color}
+    if(itemsInCart.length == 0){
+        document.querySelector('#in_cart_popover').innerHTML = 'votre panier est vide !'
+
+    }
+    else{
+        itemsInCart.forEach((element, index)=>{
+            for(let i =0; i < storedItems.length; i++){
+                if(itemsInCart[index].id == storedItems[i]._id){
+                    document.querySelector('#in_cart_popover').insertAdjacentHTML('beforeend',`
+                        <div class='row'>
+                            <div class="col-6">
+                                ${storedItems[i].name} ${itemsInCart[index].color}
+                            </div>
+                            <div class='col-6' total-id="${storedItems[i].id}-${itemsInCart[index].color}">
+                                ${itemsInCart[index].qty} * ${storedItems[i].price/100} € = ${itemsInCart[index].qty * storedItems[i].price / 100}€
+                            </div>
                         </div>
-                        <div class='col-6' total-id="${storedItems[i].id}-${itemsInCart[index].color}">
-                            ${itemsInCart[index].qty} * ${storedItems[i].price/100} € = ${itemsInCart[index].qty * storedItems[i].price / 100}€
-                        </div>
-                    </div>
-                `)
+                    `)
+                }
             }
-        }
-    })
+        })
+    }
 }
 
 
