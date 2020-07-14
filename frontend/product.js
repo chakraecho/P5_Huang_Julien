@@ -6,6 +6,8 @@ const api = "http://localhost:3000/api/teddies"
 let cart = localStorage
 let itemsInCart;//create array for items
 let product
+let storedItems = JSON.parse(sessionStorage.items)
+
 
 let fetchGET = { //get
     method: 'GET',
@@ -21,6 +23,7 @@ function refreshCart(){
     });
     //numbers of items in cart to the nav bar
     $('#in_cart_count').html(cart_number)
+    insPopover()
 }
 
 function clickAddCart(){
@@ -84,6 +87,29 @@ function insHTML(){
     clickAddCart();
 }
 
+
+function insPopover(){
+    document.querySelector('#in_cart_popover').innerHTML = ''
+    
+    itemsInCart.forEach((element, index)=>{
+        for(let i =0; i < storedItems.length; i++){
+            if(itemsInCart[index].id == storedItems[i]._id){
+                document.querySelector('#in_cart_popover').insertAdjacentHTML('beforeend',`
+                    <div class='row'>
+                        <div class="col-6">
+                            ${storedItems[i].name} ${itemsInCart[index].color}
+                        </div>
+                        <div class='col-6' total-id="${storedItems[i].id}-${itemsInCart[index].color}">
+                            ${itemsInCart[index].qty} * ${storedItems[i].price/100} € = ${itemsInCart[index].qty * storedItems[i].price / 100}€
+                        </div>
+                    </div>
+                `)
+            }
+        }
+    })
+}
+
+
 //REQ TO ID
 
     //PRODUCT PAGE GET /:id
@@ -140,6 +166,7 @@ if (sessionStorage.items == undefined){
             (data) => {
                 product = data
                 insHTML()
+                insPopover()
             }
            )
     } catch {
@@ -154,6 +181,7 @@ else{
         }
     }
     insHTML();
+    insPopover()
 }
 
 refreshCart();
