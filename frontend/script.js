@@ -52,10 +52,27 @@ function insItems(){
                 </div>
             </div>
         </div>
-    `);
+        `);
     })
 }
-
+function insPopover(){
+    itemsInCart.forEach((element, index)=>{
+        for(let i =0; i< storedItems.length; i++){
+            if(itemsInCart[index].id == storedItems[i]._id){
+                document.querySelector('#in_cart_popover').insertAdjacentHTML('beforeend',`
+                    <div class='row'>
+                        <div class="col-6">
+                            ${storedItems[i].name} ${itemsInCart[index].color}
+                        </div>
+                        <div class='col-6'>
+                            ${itemsInCart[index].qty} * ${storedItems[i].price/100} € = ${itemsInCart[index].qty * storedItems[i].price / 100}€
+                        </div>
+                    </div>
+                `)
+            }
+        }
+    })
+}
 
 if(sessionStorage.items == null || sessionStorage.items == undefined || sessionStorage.items.length == 0){
 
@@ -69,7 +86,6 @@ if(sessionStorage.items == null || sessionStorage.items == undefined || sessionS
                     if (data.length > 0) {//if teddy in stock
                         sessionStorage.setItem('items', JSON.stringify(data))
                         insItems();
-            
                     }
                     else if (data.length === 0) {//if no teddy in stock
                         $('#objectList').html("Il n'y a plus d'article disponible!")
@@ -81,45 +97,11 @@ if(sessionStorage.items == null || sessionStorage.items == undefined || sessionS
     .catch(error => {
         document.querySelector('.listed-Object').innerHTML = error
     });
-/*
-    //request GET to api
-    var req = new XMLHttpRequest
-    req.open('GET', api)
-    req.send()
-    req.onreadystatechange = function () {
-    
-        refreshCart()
-    
-        if (this.readyState == XMLHttpRequest.DONE && this.status >= 200 < 300 ) {
-            response = JSON.parse(this.responseText)
-            console.log(response.length)//number of object available
-            console.log(response[1])//test request
-            storedItems = response
-            if (response.length > 0) {//if teddy in stock
-                sessionStorage.setItem('items', JSON.stringify(response))
-                insItems();
-    
-            }
-            else if (response.length === 0) {//if no teddy in stock
-                $('#objectList').html("Il n'y a plus d'article disponible!")
-            }
-        }
-        else {//if error
-            $('#objectList').html("Erreur serveur")
-        }
-    }*/
     }
-    else{
-        storedItems = JSON.parse(sessionStorage.items)
-        insItems();
-    }
+else{
+    storedItems = JSON.parse(sessionStorage.items)
+    insItems();
+}
+
 refreshCart();
-
-
-$('#in_cart').on('mouseover',function(){//Fade in Popover incart items
-    $('#in_cart_popover').fadeIn('slow')
-})
-$('#in_cart').on('mouseout',function(){//Fade out Popover incart items
-    $('#in_cart_popover').fadeOut('slow')
-})
-
+insPopover()
