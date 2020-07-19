@@ -74,18 +74,20 @@ function removeOne(e) {
             for(let j=0; j< objects.length; j++){
                 if(itemsInCart[i].id == objects[j]._id){
                     updateQty(e.target.id, itemsInCart[i].qty, objects[j].price)
+                    refreshCart();
                 }
             }
             if(itemsInCart[i].qty <=0 ){
                 itemsInCart.splice(i, 1)
                 document.querySelector('[data="' + e.target.id + '"]').remove()
+
             }
         }
         if(itemsInCart == null == undefined || itemsInCart.length == 0){
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
+            refreshCart();
         }
     }
-    refreshCart();
 }
 
 function deleteOne(e) {

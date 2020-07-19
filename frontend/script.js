@@ -36,7 +36,6 @@ function insItems(){
     })
 }
 
-
 if(sessionStorage.items == null || sessionStorage.items == undefined || sessionStorage.items.length == 0){
 
     fetch(api, fetchGET ).then(
