@@ -1,10 +1,7 @@
 const api = "http://localhost:3000/api/teddies"
 var objects; //stockage des objets
 
-//LOCAL STORAGE
-let cart = localStorage
-let itemsInCart; //create array for items
-let storedItems
+
 
 //fetch method
 let fetchGET = { //get
@@ -15,61 +12,9 @@ let fetchGET = { //get
 
 
 
-function refreshCart() {
-    let cart_number = 0
-    itemsInCart.forEach(element => {
-        cart_number += element.qty
-    });
-    cart.setItem('inCart', JSON.stringify(itemsInCart))
-
-    //numbers of items in cart to the nav bar
-    $('#in_cart_count').html(cart_number)
-
-    //total price
-    let total = 0;
-    document.querySelectorAll('[data-total]').forEach(element =>{
-        total +=  parseInt(element.innerHTML.split(' ')[0])
-        console.log(element.innerHTML.split(' ')[0])
-    })
-    if(document.querySelector('#in-cart-total') != null){
-        document.querySelector('#in-cart-total').innerHTML = total + ' €'
-
-    }
-
-    insPopover()
-
-}
-
-function insPopover(){
-    document.querySelector('#in_cart_popover').innerHTML = ''
-    if(itemsInCart.length == 0){
-        document.querySelector('#in_cart_popover').innerHTML = 'votre panier est vide !'
-
-    }
-    else{
-        itemsInCart.forEach((element, index)=>{
-            for(let i =0; i < storedItems.length; i++){
-                if(itemsInCart[index].id == storedItems[i]._id){
-                    document.querySelector('#in_cart_popover').insertAdjacentHTML('beforeend',`
-                        <div class='row'>
-                            <div class="col-6">
-                                ${storedItems[i].name} ${itemsInCart[index].color}
-                            </div>
-                            <div class='col-6' total-id="${storedItems[i].id}-${itemsInCart[index].color}">
-                                ${itemsInCart[index].qty} * ${storedItems[i].price/100} € = ${itemsInCart[index].qty * storedItems[i].price / 100}€
-                            </div>
-                        </div>
-                    `)
-                }
-            }
-        })
-    }
-}
-
-
 function sStorage(){
     if(sessionStorage.items == undefined || sessionStorage.items.length == 0){
-        sessionStorage.setItem('items', JSON.stringify(objects))
+        sessionStorage.setItem('items', JSON.stringify(storedItems))
     }
 }
 
@@ -85,7 +30,7 @@ fetch(api, fetchGET)
                         storedItems = data
                         sStorage();
                         insLocalStorage();
-                        insHTML();
+                        insProductHTML();
                     }
                 )
             } catch {
@@ -168,11 +113,10 @@ function insLocalStorage() {
     if (localStorage == null || localStorage.length == 0 || localStorage == undefined) { //if first time connecting to this website
         itemsInCart = []
         qtyInCart = []
-        $('#card_button').html('0')
+        document.querySelector('#card_button').innerHTML = '0'
         return "ok"
     } else {
-        itemsInCart = JSON.parse(cart.getItem('inCart'))
-        qtyInCart = JSON.parse(cart.getItem('qtyInCart'))
+        itemsInCart = JSON.parse(localStorage.getItem('inCart'))
         refreshCart();
         return "ok"
     };
@@ -205,29 +149,33 @@ function validationForm(){
 
 
 //is there smthng in cart ?????
-function insHTML() {
+function insProductHTML() {
     console.log(objects)
     if (cart == undefined || cart.length == 0 || itemsInCart.length == 0 ||itemsInCart == null == undefined) {
         document.querySelector('#in-cart').innerHTML = "Votre panier est vide.... (ou presque !)"
     } else {
-        $('#in-cart-list').append(
+        document.querySelector('#in-cart-list').insertAdjacentHTML('beforeend',
             `
-            <div class="col-md-10 col-sm-12 d-none d-md-block">
+            <section class="col-md-12 col-sm-12 d-none d-md-block">
                 <div class="row border-bottom border-light">
-                    <div class="col-md-5 text-center ">
+                    <div class="col-4 col-md-3  text-center ">
                         <p>désignation</p>
                     </div>
-                    <div class="col-md-2 ">
-                    <p>couleur</p>
+                    <div class='col-5'>
+                        <div class='row'>
+                            <div class="col-4 text-center d-none d-md-block ">
+                                <p>couleur</p>
+                            </div>
+                            <div class="col-8 text-center">
+                                <p>quantité</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 text-center">
-                        <p>quantité</p>
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-2">
                         <p>sous-total</p>
                     </div>
                 </div>
-            </div>
+            </section>
             `
         )
         for (let j = 0; j < itemsInCart.length; j++) {
@@ -237,40 +185,47 @@ function insHTML() {
                 console.log('objets accedé')
                 if (objects[i]._id == itemsInCart[j].id) {
                     console.log(objects[i].price, itemsInCart[j].qty)
-                    $('#in-cart-list').append(
+                    document.querySelector('#in-cart-list').insertAdjacentHTML('beforeend',
                         `
-                        <div class="col-12 in-cart-object" data="${objects[i]._id}-${itemsInCart[j].color}">
+                        <section class="col-12 in-cart-object" data="${objects[i]._id}-${itemsInCart[j].color}">
                             <div class="row py-3 border-top border-bottom border-light ">
-                                <div class="col-md-2 col-3">
-                                    <img src="${objects[i].imageUrl}" class="w-100 border border-secondary" alt="image de ${objects[i].name}">
-                                </div>
-                                <div class="col-md-10 col-9  d-flex flex-row flex-wrap">
-                                    <div class="col-md-2 col-6">
-                                    <p> ${objects[i].name} </p>
-                                    </div>
-                                    <div class="col-md-2 col-6">
-                                    <p> ${itemsInCart[j].color} </p>
-                                    </div>
-                                    <div class="col-md-3 text-center col-5">
-                                        <p><button type="button" class="btn-outline-info remove-one mr-1" id="${objects[i]._id}-${itemsInCart[j].color}">-</button><span data-qty="${objects[i]._id}-${itemsInCart[j].color}">${itemsInCart[j].qty}</span><button type="button" class="btn-outline-info add-one ml-1" id="${objects[i]._id}-${itemsInCart[j].color}">+</button></p>
-                                    </div>
-                                    <div class="col-md-4 col-4">
-                                        <p data-total="${objects[i]._id}-${itemsInCart[j].color}">${objects[i].price * itemsInCart[j].qty /100} €</p>
-                                    </div>
-                                    <div class="col-md-1 col-2">
-                                        <img class="delete-button w-50" id="${objects[i]._id}-${itemsInCart[j].color}" src="./img/cart/trash.svg" />
+                                <div class="col-4 col-md-3">
+                                    <div class='row'>
+                                        <img src="${objects[i].imageUrl}" class="w-100 border border-secondary col-md-4 col-12 p-0" alt="image de ${objects[i].name}">
+                                        <div class="col-12 col-md-8 text-center">
+                                        <p> ${objects[i].name} </p>
+                                        </div>
                                     </div>
                                 </div>
-                                
+                                <div class='col-5'>
+                                    <div class='row h-100 align-content-between'>
+                                        <div class="col-md-4 text-center col-12">
+                                            <p> ${itemsInCart[j].color} </p>
+                                        </div>
+                                        <div class="col-md-8 text-center col-12">
+                                            <p><button type="button" class="btn-outline-info remove-one mr-1" id="${objects[i]._id}-${itemsInCart[j].color}">-</button><span data-qty="${objects[i]._id}-${itemsInCart[j].color}">${itemsInCart[j].qty}</span><button type="button" class="btn-outline-info add-one ml-1" id="${objects[i]._id}-${itemsInCart[j].color}">+</button></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class='row h-100 align-content-between'>
+                                        <div class="col-12 col-md-6">
+                                            <p data-total="${objects[i]._id}-${itemsInCart[j].color}">${objects[i].price * itemsInCart[j].qty /100} €</p>
+                                        </div>
+                                        <div class="col-md-4 col-12 p-0">
+                                                <img class="delete-button w-50" id="${objects[i]._id}-${itemsInCart[j].color}" src="./img/cart/trash.svg" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </section>
                         `
                     )
                 }
             }
         }
-        $('#contact-form').append(`
-                    <div class="container">
+        document.querySelector('#contact-form').insertAdjacentHTML('beforeend', `
+                    <section class="container">
                                 <div class="form-row mt-1">
                                     <label for='name' class="col-2">
                                         Nom
@@ -306,10 +261,10 @@ function insHTML() {
                                 </div>
 
                             </div>
-                    </div>
+                    </section>
 
                     `)
-        $('#payment').append(` 
+        document.querySelector('#payment').insertAdjacentHTML('beforeend', ` 
                     <div class="row mt-5">
                         <p> Mode de paiement (API non implémenté, input non-requis) </p>
                     </div>
@@ -406,7 +361,6 @@ formContact.addEventListener('click', function (e) { //submit
         e.preventDefault();
         fetch('http://localhost:3000/api/teddies/order', {
             method: 'POST',
-            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
