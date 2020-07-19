@@ -1,18 +1,38 @@
 var response;
 const api = "http://localhost:3000/api/teddies"
 
+//LOCAL STORAGE
+let cart = localStorage
+let itemsInCart = [];//create array for items
+let storedItems
 //fetch method
 let fetchGET = { //get
     method: 'GET',
     mode: 'cors'
 }
 
+function refreshCart(){
+    let cart_number = 0
+    if(localStorage.length == 0 || localStorage.inCart ==undefined){
+        $('#in_cart_count').html(0)
+
+    }
+    else{
+        itemsInCart = JSON.parse(cart.inCart)
+        itemsInCart.forEach(element => {
+            console.log(element)
+            cart_number += element.qty
+        });
+    }
+    //numbers of items in cart to the nav bar
+    $('#in_cart_count').html(cart_number)
+}
 
 function insItems(){
     storedItems.forEach((element, index) => {//insert all teddies in a list
         //insert card
-        document.querySelector('#objectList').insertAdjacentHTML("beforeend", `
-        <aside class="card col-md-5 align-content-between col-8 mx-auto p-0 ml-2 mr-2 mb-2" id="card_' + index + '"data-id=" ${storedItems[index]._id}">
+        $('#objectList').append(`
+        <div class="card col-md-5 align-content-between col-8 mx-auto p-0 ml-2 mr-2 mb-2" id="card_' + index + '"data-id=" ${storedItems[index]._id}">
                 <a href="./product.html?${storedItems[index]._id}" >
                     <img class="card-img-top border border-light" id="card-img_' + index + '" alt="image de ${storedItems[index].name}" src="${storedItems[index].imageUrl}"/>
                 </a>
@@ -31,9 +51,34 @@ function insItems(){
                     </a>
                 </div>
             </div>
-        </aside>
+        </div>
         `);
     })
+}
+function insPopover(){
+    document.querySelector('#in_cart_popover').innerHTML = ''
+    if(itemsInCart.length == 0){
+        document.querySelector('#in_cart_popover').innerHTML = 'votre panier est vide !'
+
+    }
+    else{
+        itemsInCart.forEach((element, index)=>{
+            for(let i =0; i < storedItems.length; i++){
+                if(itemsInCart[index].id == storedItems[i]._id){
+                    document.querySelector('#in_cart_popover').insertAdjacentHTML('beforeend',`
+                        <div class='row'>
+                            <div class="col-6">
+                                ${storedItems[i].name} ${itemsInCart[index].color}
+                            </div>
+                            <div class='col-6' total-id="${storedItems[i].id}-${itemsInCart[index].color}">
+                                ${itemsInCart[index].qty} * ${storedItems[i].price/100} € = ${itemsInCart[index].qty * storedItems[i].price / 100}€
+                            </div>
+                        </div>
+                    `)
+                }
+            }
+        })
+    }
 }
 
 if(sessionStorage.items == null || sessionStorage.items == undefined || sessionStorage.items.length == 0){
@@ -50,7 +95,7 @@ if(sessionStorage.items == null || sessionStorage.items == undefined || sessionS
                         insItems();
                     }
                     else if (data.length === 0) {//if no teddy in stock
-                        document.querySelector('#objectList').innerHTML = "Il n'y a plus d'article disponible!"
+                        $('#objectList').html("Il n'y a plus d'article disponible!")
                     }
                 }
             )
