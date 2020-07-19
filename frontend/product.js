@@ -1,12 +1,7 @@
 var response;
 const api = "http://localhost:3000/api/teddies"
 
-
-//LOCAL STORAGE
-let cart = localStorage
-let itemsInCart;//create array for items
 let product
-let storedItems = JSON.parse(sessionStorage.items)
 
 
 let fetchGET = { //get
@@ -15,16 +10,6 @@ let fetchGET = { //get
 }
 
 
-
-function refreshCart(){
-    let cart_number = 0
-    itemsInCart.forEach(element => {
-        cart_number += element.qty
-    });
-    //numbers of items in cart to the nav bar
-    $('#in_cart_count').html(cart_number)
-    insPopover()
-}
 
 function clickAddCart(){
 
@@ -53,32 +38,42 @@ function clickAddCart(){
         refreshCart();
     });
 }
-function insHTML(){
-    $('title').html("oribear - "+product.name)
-    $('#product-title').html(product.name)
-    $('#product_body').append(`
-    <img class="col-sm-6 col-md-3 p-0 border border-secondary offset-md-1" src="${product.imageUrl}" alt="image de ${product.name}"/>
-    <p class="col-md-4 col-sm-8" id="product_description">${product.description}</p>
-    <div class="col-md-3 col-sm-10 d-flex flex-column justify-content-between align-items-center" id="product_cart_col">
-        <form id="color-select">
-            <label for="color-select_menu" id="color-label">Couleur :</label>
-            <select required="" name="color-select_menu" id="color-select_menu" >
-            </select>
-        </form>
-    </div>
-    <h2>${product.price/100}€</h2>
-    <button type="button" class="btn add_cart mx-auto btn-success" id="${product._id}" id="${product._id}">Ajouter au panier</button>
-    `)
-    for(let i=0; i < product.colors.length;i++){
-        $('#color-select_menu').append('<option value="'+product.colors[i]+'">'+product.colors[i]+'</option>')
+function insProductHTML(){
+    if(objectIsEmpty(product)){
+        document.querySelector('#product_body').insertAdjacentHTML('beforeend',`
+        <div class='row'>
+            <h1 class='mx-auto'> erreur 404   :'(        ce produit est introuvable</h1>
+        </div>
+        `)
+    }
+    else{
+        document.querySelector('title').innerHTML = "oribear - "+product.name
+        document.querySelector('#product-title').innerHTML = product.name
+        document.querySelector('#product_body').insertAdjacentHTML('beforeend', `
+        <img class="col-sm-6 col-md-3 p-0 border border-secondary offset-md-1" src="${product.imageUrl}" alt="image de ${product.name}"/>
+        <p class="col-md-4 col-sm-8" id="product_description">${product.description}</p>
+        <div class="col-md-3 col-sm-10 d-flex flex-column justify-content-between align-items-center" id="product_cart_col">
+            <form id="color-select">
+                <label for="color-select_menu" id="color-label">Couleur :</label>
+                <select required="" name="color-select_menu" id="color-select_menu" >
+                </select>
+            </form>
+        </div>
+        <h2>${product.price/100}€</h2>
+        <button type="button" class="btn add_cart mx-auto btn-success" id="${product._id}" id="${product._id}">Ajouter au panier</button>
+        `)
+        for(let i=0; i < product.colors.length;i++){
+            document.querySelector('#color-select_menu').insertAdjacentHTML('beforeend', '<option value="'+product.colors[i]+'">'+product.colors[i]+'</option>')
+        }
+        
     }
     if (localStorage == null) {//if first time connecting to this website
         itemsInCart = []
-        $('#card_button').html('0')
+        document.querySelector('#card_button').innerHTML = '0'
     }
     else if(localStorage.length ==0){
         itemsInCart = []
-        $('#card_button').html('0')
+        document.querySelector('#card_button').innerHTML = '0'
     }
     else {
         itemsInCart = JSON.parse(cart.getItem('inCart'))
@@ -88,31 +83,7 @@ function insHTML(){
 }
 
 
-function insPopover(){
-    document.querySelector('#in_cart_popover').innerHTML = ''
-    if(itemsInCart.length == 0){
-        document.querySelector('#in_cart_popover').innerHTML = 'votre panier est vide !'
 
-    }
-    else{
-        itemsInCart.forEach((element, index)=>{
-            for(let i =0; i < storedItems.length; i++){
-                if(itemsInCart[index].id == storedItems[i]._id){
-                    document.querySelector('#in_cart_popover').insertAdjacentHTML('beforeend',`
-                        <div class='row'>
-                            <div class="col-6">
-                                ${storedItems[i].name} ${itemsInCart[index].color}
-                            </div>
-                            <div class='col-6' total-id="${storedItems[i].id}-${itemsInCart[index].color}">
-                                ${itemsInCart[index].qty} * ${storedItems[i].price/100} € = ${itemsInCart[index].qty * storedItems[i].price / 100}€
-                            </div>
-                        </div>
-                    `)
-                }
-            }
-        })
-    }
-}
 
 //REQ TO ID
 
@@ -169,22 +140,29 @@ if (sessionStorage.items == undefined){
            response.json().then(
             (data) => {
                 product = data
-                insHTML()
+                insProductHTML()
                 insPopover()
             }
            )
     } catch {
         console.log('error parsing data')
     }
-}).catch(error => console.log(error))
+}).catch(error => {
+    document.querySelector('#product_body').insertAdjacentHTML('beforeend',`
+    <div class='row'>
+        <h1 class='mx-auto'> ${error}</h1>
+    </div>
+    `)
+})
 }
 else{
+    storedItems = JSON.parse(sessionStorage.items)
     for (let i = 0; i< JSON.parse(sessionStorage.items).length; i++){
         if(idProduct == JSON.parse(sessionStorage.items)[i]._id){
             product = JSON.parse(sessionStorage.items)[i]
         }
     }
-    insHTML();
+    insProductHTML();
     insPopover()
 }
 
