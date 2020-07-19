@@ -63,6 +63,9 @@ a {
 }
 #in_cart_popover {
   display: none;
+  width: 1000% !important;
+  opacity: 0;
+  transition: all 1s;
   position: absolute;
   top: 45px;
   right: 0px;
@@ -71,6 +74,8 @@ a {
   padding: 5px;
   z-index: 5;
   width: max-content;
+  opacity: 0;
+  color: black;
 }
 #in_cart_popover:before {
   display: inline-block;
@@ -82,7 +87,7 @@ a {
   border-left: 5px solid transparent;
   position: absolute;
   top: -5px;
-  left: 80%;
+  left: 95%;
 }
 #in_cart_popover p {
   white-space: nowrap;
@@ -117,6 +122,22 @@ footer {
   cursor: pointer;
 }
 
+@media (min-width: 991px) {
+  .wrapper-count:hover > #in_cart_popover {
+    display: block;
+    opacity: 1;
+  }
+
+  .in_cart_count:hover > #in_cart_popover {
+    display: block;
+    opacity: 1;
+  }
+
+  #in_cart_popover:hover {
+    display: block;
+    opacity: 1;
+  }
+}
 .brand {
   height: 2em;
 }

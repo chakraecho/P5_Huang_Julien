@@ -4,7 +4,7 @@ var objects; //stockage des objets
 //LOCAL STORAGE
 let cart = localStorage
 let itemsInCart; //create array for items
-let qtyInCart; //qty in cart
+let storedItems
 
 //fetch method
 let fetchGET = { //get
@@ -31,9 +31,42 @@ function refreshCart() {
         total +=  parseInt(element.innerHTML.split(' ')[0])
         console.log(element.innerHTML.split(' ')[0])
     })
-    document.querySelector('#in-cart-total').innerHTML = total + ' €'
+    if(document.querySelector('#in-cart-total') != null){
+        document.querySelector('#in-cart-total').innerHTML = total + ' €'
+
+    }
+
+    insPopover()
 
 }
+
+function insPopover(){
+    document.querySelector('#in_cart_popover').innerHTML = ''
+    if(itemsInCart.length == 0){
+        document.querySelector('#in_cart_popover').innerHTML = 'votre panier est vide !'
+
+    }
+    else{
+        itemsInCart.forEach((element, index)=>{
+            for(let i =0; i < storedItems.length; i++){
+                if(itemsInCart[index].id == storedItems[i]._id){
+                    document.querySelector('#in_cart_popover').insertAdjacentHTML('beforeend',`
+                        <div class='row'>
+                            <div class="col-6">
+                                ${storedItems[i].name} ${itemsInCart[index].color}
+                            </div>
+                            <div class='col-6' total-id="${storedItems[i].id}-${itemsInCart[index].color}">
+                                ${itemsInCart[index].qty} * ${storedItems[i].price/100} € = ${itemsInCart[index].qty * storedItems[i].price / 100}€
+                            </div>
+                        </div>
+                    `)
+                }
+            }
+        })
+    }
+}
+
+
 function sStorage(){
     if(sessionStorage.items == undefined || sessionStorage.items.length == 0){
         sessionStorage.setItem('items', JSON.stringify(objects))
@@ -49,6 +82,7 @@ fetch(api, fetchGET)
                         console.log(data)
                         console.log('GET effectué')
                         objects = data
+                        storedItems = data
                         sStorage();
                         insLocalStorage();
                         insHTML();
