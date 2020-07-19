@@ -85,7 +85,6 @@ function insProductHTML(){
 
 
 
-
 //REQ TO ID
 
     //PRODUCT PAGE GET /:id
