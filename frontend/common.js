@@ -3,6 +3,10 @@ let cart = localStorage
 let itemsInCart = [];//create array for items
 let storedItems
 
+if(localStorage.inCart == undefined){
+    localStorage.setItem('inCart', [])
+}
+
 function insPopover(){
     document.querySelector('#in_cart_popover').innerHTML = ''
     if(itemsInCart.length == 0){
@@ -30,9 +34,15 @@ function insPopover(){
 }
 
 function refreshCart() {
-    if (localStorage.inCart.length > 0){
+
+    if(localStorage.inCart == undefined){
+        localStorage.setItem('inCart', [])
+    }
+    else if (localStorage != undefined &&  localStorage.inCart.length > 0){
         itemsInCart = JSON.parse(localStorage.inCart)
     }
+
+
     let cart_number = 0
     itemsInCart.forEach(element => {
         cart_number += element.qty
