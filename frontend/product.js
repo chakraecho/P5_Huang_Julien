@@ -45,6 +45,7 @@ function insProductHTML(){
             <h1 class='mx-auto'> erreur 404   :'(        ce produit est introuvable</h1>
         </div>
         `)
+        document.querySelector('title').innerHTML = 'Orinobear - produit non trouvé !'
     }
     else{
         document.querySelector('title').innerHTML = "oribear - "+product.name
@@ -60,7 +61,7 @@ function insProductHTML(){
             </form>
         </div>
         <h2>${product.price/100}€</h2>
-        <button type="button" class="btn add_cart mx-auto btn-success" id="${product._id}" id="${product._id}">Ajouter au panier</button>
+        <button type="button" class="btn add_cart mx-auto btn-success"  id="${product._id}">Ajouter au panier</button>
         `)
         for(let i=0; i < product.colors.length;i++){
             document.querySelector('#color-select_menu').insertAdjacentHTML('beforeend', '<option value="'+product.colors[i]+'">'+product.colors[i]+'</option>')

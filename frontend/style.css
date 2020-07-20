@@ -39,6 +39,22 @@ a {
   font-family: "sans-serif";
 }
 
+.card-body a {
+  color: black;
+}
+
+footer a {
+  color: white;
+}
+
+.btn-success {
+  color: #1e1e1e;
+}
+
+#in_cart_count {
+  color: #1F2327;
+}
+
 .listed-object div div img {
   width: 100%;
 }
