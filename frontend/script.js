@@ -49,6 +49,7 @@ if(sessionStorage.items == null || sessionStorage.items == undefined || sessionS
                     if (data.length > 0) {//if teddy in stock
                         sessionStorage.setItem('items', JSON.stringify(data))
                         insItems();
+                        insPopover()
                     }
                     else if (data.length === 0) {//if no teddy in stock
                         document.querySelector('#objectList').innerHTML = "Il n'y a plus d'article disponible!"
@@ -64,7 +65,7 @@ if(sessionStorage.items == null || sessionStorage.items == undefined || sessionS
 else{
     storedItems = JSON.parse(sessionStorage.items)
     insItems();
+    insPopover()
 }
 
 refreshCart();
-insPopover()

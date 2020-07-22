@@ -135,6 +135,28 @@ function insProductHTML(){
     } */
 
 if (sessionStorage.items == undefined){
+    fetch(api, fetchGET ).then(
+        (response)=>{
+            response.json().then(
+                data => {
+                    console.log(response.length)//number of object available
+                    console.log(response[1])//test request
+                    storedItems = data
+                    if (data.length > 0) {//if teddy in stock
+                        sessionStorage.setItem('items', JSON.stringify(data))
+                        insItems();
+                        insPopover()
+                    }
+                    else if (data.length === 0) {//if no teddy in stock
+                        document.querySelector('#objectList').innerHTML = "Il n'y a plus d'article disponible!"
+                    }
+                }
+            )
+        }
+    )
+    .catch(error => {
+        alert('error fetching data')
+    });
     fetch(api+ '/'+idProduct, fetchGET)
     .then(response => {
        try{ 
