@@ -135,7 +135,11 @@ function validationForm(){
     let CP = document.querySelector('#CP').value
     let regexMail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/
     let regexCP = new RegExp('[0-9]{5}')
+    let regexName = /^[a-z ,.'-]+$/
     if(name.length < 2 || firstName.length < 2 || email.length < 2 || address.length <2 || city.length <2 || CP.length<2){
+        return false
+    }
+    else if(!regexName.test(name) || !regexName.test(firstName)){
         return false
     }
     else if(!regexMail.test(email)){
@@ -181,10 +185,7 @@ function insProductHTML() {
             `
         )
         for (let j = 0; j < itemsInCart.length; j++) {
-            console.log('boucle id ok')
-            console.log(j)
             for (let i = 0; i < objects.length; i++) {
-                console.log('objets accedé')
                 if (objects[i]._id == itemsInCart[j].id) {
                     console.log(objects[i].price, itemsInCart[j].qty)
                     document.querySelector('#in-cart-list').insertAdjacentHTML('beforeend',
@@ -232,11 +233,11 @@ function insProductHTML() {
                                     <label for='name' class="col-2">
                                         Nom
                                     </label>
-                                    <input type="text" required class='col mx-2 form-control-sm' id="name"  />
+                                    <input type="text" required class='col mx-2 form-control-sm' id="name" pattern="[a-z ,.'-]*" />
                                     <label for='first-name'>
                                         Prénom
                                     </label>
-                                    <input type="text" class='col mx-2 form-control-sm' required id="first-name" />
+                                    <input type="text" class='col mx-2 form-control-sm' required id="first-name" pattern="[a-z ,.'-]*" />
                                 </div>
                                 <div class="form-row mt-1">
                                     <label for='email' class="col-2">
@@ -359,7 +360,7 @@ function stringifyPost() {
 
 
 formContact.addEventListener('click', function (e) { //submit
-    if(validationForm() == true){
+    if(validationForm()){
         e.preventDefault();
         fetch('http://localhost:3000/api/teddies/order', {
             method: 'POST',
@@ -380,4 +381,5 @@ formContact.addEventListener('click', function (e) { //submit
             alert('fetch POST error : ' + error)
         })
     }
+
 })
