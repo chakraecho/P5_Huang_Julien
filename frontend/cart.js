@@ -1,5 +1,5 @@
 const api = "http://localhost:3000/api/teddies"
-var objects; //stockage des objets
+var storedItems; //stockage des objets
 
 
 
@@ -26,7 +26,6 @@ if(sessionStorage.items == undefined ){
                     (data) => {
                         console.log(data)
                         console.log('GET effectué')
-                        objects = data
                         storedItems = data
                         sStorage();
                         insLocalStorage();
@@ -46,6 +45,7 @@ if(sessionStorage.items == undefined ){
 }
 else{
     storedItems = JSON.parse(sessionStorage.items)
+
 }
 
 
@@ -60,9 +60,9 @@ function addOne(e) {
         if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
             itemsInCart[i].qty++
             cart.inCart = JSON.stringify(itemsInCart)
-            for(let j=0; j< objects.length; j++){
-                if(itemsInCart[i].id == objects[j]._id){
-                    updateQty(e.target.id, itemsInCart[i].qty, objects[j].price)
+            for(let j=0; j< storedItems.length; j++){
+                if(itemsInCart[i].id == storedItems[j]._id){
+                    updateQty(e.target.id, itemsInCart[i].qty, storedItems[j].price)
                     refreshCart();
                 }
             }
@@ -76,9 +76,9 @@ function removeOne(e) {
         if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
             itemsInCart[i].qty--
             cart.inCart = JSON.stringify(itemsInCart)
-            for(let j=0; j< objects.length; j++){
-                if(itemsInCart[i].id == objects[j]._id){
-                    updateQty(e.target.id, itemsInCart[i].qty, objects[j].price)
+            for(let j=0; j< storedItems.length; j++){
+                if(itemsInCart[i].id == storedItems[j]._id){
+                    updateQty(e.target.id, itemsInCart[i].qty, storedItems[j].price)
                     refreshCart();
                 }
             }
@@ -161,7 +161,6 @@ function validationForm(){
 
 //is there smthng in cart ?????
 function insProductHTML() {
-    console.log(objects)
     if (cart == undefined || cart.length == 0 || itemsInCart.length == 0 ||itemsInCart == null == undefined) {
         document.querySelector('#in-cart').innerHTML = "Votre panier est vide.... (ou presque !)"
     } else {
@@ -190,18 +189,18 @@ function insProductHTML() {
             `
         )
         for (let j = 0; j < itemsInCart.length; j++) {
-            for (let i = 0; i < objects.length; i++) {
-                if (objects[i]._id == itemsInCart[j].id) {
-                    console.log(objects[i].price, itemsInCart[j].qty)
+            for (let i = 0; i < storedItems.length; i++) {
+                if (storedItems[i]._id == itemsInCart[j].id) {
+                    console.log(storedItems[i].price, itemsInCart[j].qty)
                     document.querySelector('#in-cart-list').insertAdjacentHTML('beforeend',
                         `
-                        <section class="col-12 in-cart-object" data="${objects[i]._id}-${itemsInCart[j].color}">
+                        <section class="col-12 in-cart-object" data="${storedItems[i]._id}-${itemsInCart[j].color}">
                             <div class="row py-3 border-top border-bottom border-light ">
                                 <div class="col-4 col-md-3">
                                     <div class='row'>
-                                        <img src="${objects[i].imageUrl}" class="w-100 border border-secondary col-md-4 col-12 p-0" alt="image de ${objects[i].name}">
+                                        <img src="${storedItems[i].imageUrl}" class="w-100 border border-secondary col-md-4 col-12 p-0" alt="image de ${storedItems[i].name}">
                                         <div class="col-12 col-md-8 text-center">
-                                        <p> ${objects[i].name} </p>
+                                        <p> ${storedItems[i].name} </p>
                                         </div>
                                     </div>
                                 </div>
@@ -211,17 +210,17 @@ function insProductHTML() {
                                             <p> ${itemsInCart[j].color} </p>
                                         </div>
                                         <div class="col-md-8 text-center col-12">
-                                            <p><button type="button" class="btn-outline-info remove-one mr-1" id="${objects[i]._id}-${itemsInCart[j].color}">-</button><span data-qty="${objects[i]._id}-${itemsInCart[j].color}">${itemsInCart[j].qty}</span><button type="button" class="btn-outline-info add-one ml-1" id="${objects[i]._id}-${itemsInCart[j].color}">+</button></p>
+                                            <p><button type="button" class="btn-outline-info remove-one mr-1" id="${storedItems[i]._id}-${itemsInCart[j].color}">-</button><span data-qty="${storedItems[i]._id}-${itemsInCart[j].color}">${itemsInCart[j].qty}</span><button type="button" class="btn-outline-info add-one ml-1" id="${storedItems[i]._id}-${itemsInCart[j].color}">+</button></p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class='row h-100 align-content-between'>
                                         <div class="col-12 col-md-6">
-                                            <p data-total="${objects[i]._id}-${itemsInCart[j].color}">${objects[i].price * itemsInCart[j].qty /100} €</p>
+                                            <p data-total="${storedItems[i]._id}-${itemsInCart[j].color}">${storedItems[i].price * itemsInCart[j].qty /100} €</p>
                                         </div>
                                         <div class="col-md-4 col-12 p-0">
-                                                <img class="delete-button w-50" id="${objects[i]._id}-${itemsInCart[j].color}" src="./img/cart/trash.svg" />
+                                                <img class="delete-button w-50" id="${storedItems[i]._id}-${itemsInCart[j].color}" src="./img/cart/trash.svg" />
                                         </div>
                                     </div>
                                 </div>
