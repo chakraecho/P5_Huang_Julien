@@ -17,8 +17,8 @@ function sStorage(){
         sessionStorage.setItem('items', JSON.stringify(storedItems))
     }
 }
-
-fetch(api, fetchGET)
+if(sessionStorage.items == undefined ){
+    fetch(api, fetchGET)
     .then(
         (response) => {
             try {
@@ -43,6 +43,11 @@ fetch(api, fetchGET)
             console.log('fetch errror:', error)
         }
     )
+}
+else{
+    storedItems = JSON.parse(sessionStorage.items)
+}
+
 
 function updateQty(id, qty, price) {
     document.querySelector("[data-qty='" + id + "']").innerHTML = qty
