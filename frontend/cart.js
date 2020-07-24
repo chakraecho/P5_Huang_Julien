@@ -1,5 +1,5 @@
 const api = "http://localhost:3000/api/teddies"
-var storedItems; //stockage des objets
+
 
 
 
@@ -45,7 +45,8 @@ if(sessionStorage.items == undefined ){
 }
 else{
     storedItems = JSON.parse(sessionStorage.items)
-
+    insLocalStorage();
+    insProductHTML();
 }
 
 
@@ -119,7 +120,6 @@ function deleteOne(e) {
 function insLocalStorage() {
     if (localStorage == null || localStorage.length == 0 || localStorage == undefined) { //if first time connecting to this website
         itemsInCart = []
-        qtyInCart = []
         document.querySelector('#card_button').innerHTML = '0'
         return "ok"
     } else {
@@ -191,7 +191,6 @@ function insProductHTML() {
         for (let j = 0; j < itemsInCart.length; j++) {
             for (let i = 0; i < storedItems.length; i++) {
                 if (storedItems[i]._id == itemsInCart[j].id) {
-                    console.log(storedItems[i].price, itemsInCart[j].qty)
                     document.querySelector('#in-cart-list').insertAdjacentHTML('beforeend',
                         `
                         <section class="col-12 in-cart-object" data="${storedItems[i]._id}-${itemsInCart[j].color}">
