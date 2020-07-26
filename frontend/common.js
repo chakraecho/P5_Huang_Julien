@@ -56,8 +56,7 @@ function refreshCart() {
     let total = 0;
     document.querySelectorAll('[data-total]').forEach(element =>{
         total +=  parseInt(element.innerHTML.split(' ')[0])
-        console.log(element.innerHTML.split(' ')[0])
-    })
+=    })
     if(document.querySelector('#in-cart-total') != null){
         document.querySelector('#in-cart-total').innerHTML = total + ' €'
     }
@@ -67,10 +66,4 @@ function refreshCart() {
 
 }
 
-function objectIsEmpty(obj){
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
-    }
-    return true;
-}
+

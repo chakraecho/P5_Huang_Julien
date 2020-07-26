@@ -24,8 +24,6 @@ if(sessionStorage.items == undefined ){
             try {
                 response.json().then(
                     (data) => {
-                        console.log(data)
-                        console.log('GET effectué')
                         storedItems = data
                         sStorage();
                         insLocalStorage();
@@ -127,8 +125,6 @@ function insLocalStorage() {
         refreshCart();
         return "ok"
     };
-    console.log('insertion ok')
-
 }
 
 function validationForm(){
@@ -375,7 +371,6 @@ formContact.addEventListener('click', function (e) { //submit
         }).then(response => {
             return response.json();
         }).then(jsonResponse => {
-            console.log(jsonResponse)
             sessionStorage.setItem('confirmation',JSON.stringify(itemsInCart))
             sessionStorage.setItem('contact', JSON.stringify(jsonResponse.contact))
             window.location.href = './order.html?confirmation='+jsonResponse.orderId

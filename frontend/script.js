@@ -43,8 +43,6 @@ if(sessionStorage.items == null || sessionStorage.items == undefined || sessionS
         (response)=>{
             response.json().then(
                 data => {
-                    console.log(response.length)//number of object available
-                    console.log(response[1])//test request
                     storedItems = data
                     if (data.length > 0) {//if teddy in stock
                         sessionStorage.setItem('items', JSON.stringify(data))

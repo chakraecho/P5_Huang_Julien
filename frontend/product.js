@@ -9,7 +9,13 @@ let fetchGET = { //get
     mode: 'cors'
 }
 
-
+function objectIsEmpty(obj){
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
 
 function clickAddCart(){
 
@@ -19,7 +25,6 @@ function clickAddCart(){
         if(itemsInCart.length > 0){
             for(let i=0; i< itemsInCart.length;i++){
                 if(this.id === itemsInCart[i].id && colorSelect === itemsInCart[i].color){
-                    console.log(this.id)
                         itemsInCart[i].qty++
                         isInCart = true
                 }
@@ -32,8 +37,6 @@ function clickAddCart(){
         else{
             itemsInCart.push({'id' :this.id, 'color': colorSelect, 'qty': 1})
         }
-        console.log(itemsInCart)
-
         cart.setItem('inCart', JSON.stringify(itemsInCart))
         refreshCart();
     });
@@ -98,8 +101,7 @@ if (sessionStorage.items == undefined){
         (response)=>{
             response.json().then(
                 data => {
-                    console.log(response.length)//number of object available
-                    console.log(response[1])//test request
+
                     storedItems = data
                     if (data.length > 0) {//if teddy in stock
                         sessionStorage.setItem('items', JSON.stringify(data))
