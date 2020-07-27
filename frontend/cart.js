@@ -78,7 +78,7 @@ function removeOne(e) {
                 deleteOne(e)
             }
         }
-        if (itemsInCart === null === undefined || itemsInCart.length == 0) {
+        if (itemsInCart === null === undefined || itemsInCart.length === 0) {
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
             refreshCart();
         }
