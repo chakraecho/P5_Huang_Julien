@@ -121,7 +121,7 @@ function validationForm() {
     let address = document.querySelector('#adress').value
     let city = document.querySelector('#city').value
     let CP = document.querySelector('#CP').value
-    let regexMail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,}$/
+    let regexMail = /^[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+\.[a-zA-Z]{2,10}$/
     let regexCP = new RegExp('[0-9]{5}')
     let regexName = /^[a-zA-Z0-9._-]+$/
     if (name.length < 2 || firstName.length < 2 || email.length < 2 || address.length < 2 || city.length < 2 || CP.length < 2) {
@@ -227,7 +227,7 @@ function insProductHTML() {
                                     <label for='email' class="col-2">
                                         email
                                     </label>
-                                    <input type="email" class='col mx-2 form-control-sm'required  id="email" pattern='[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,}'/>
+                                    <input type="text" pattern="[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+\.[a-zA-Z]{2,10}"  class='col mx-2 form-control-sm' required  id="email"/>
                                 </div>
                                 <div class="form-row mt-1">
                                     <label for='adress' class='col-2'>
@@ -349,5 +349,9 @@ formContact.addEventListener('click', function (e) { //submit
         .catch((error) => {
             alert('fetch POST error : ' + error)
         })
+    }
+    else if(!validationForm()){
+        e.preventDefault()
+        alert('veuillez vérifier vos informations de contact')
     }
 })
