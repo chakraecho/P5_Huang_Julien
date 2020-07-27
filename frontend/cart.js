@@ -88,7 +88,7 @@ function removeOne(e) {
 function deleteOne(e) {
     let split = e.target.id.split('-')
     for (let j = 0; j < itemsInCart.length; j++) {
-        if (itemsInCart[j].id == split[0] && itemsInCart[j].color == split[1]) {
+        if (itemsInCart[j].id === split[0] && itemsInCart[j].color === split[1]) {
             itemsInCart.splice(j, 1)
             cart.inCart = JSON.stringify(itemsInCart)
             document.querySelector('[data="' + e.target.id + '"]').remove()

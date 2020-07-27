@@ -69,11 +69,11 @@ function insProductHTML() {
             document.querySelector('#color-select_menu').insertAdjacentHTML('beforeend', '<option value="' + product.colors[i] + '">' + product.colors[i] + '</option>')
         }
     }
-    if (localStorage == null) {//if first time connecting to this website
+    if (localStorage === null) {//if first time connecting to this website
         itemsInCart = []
         document.querySelector('#card_button').innerHTML = '0'
     }
-    else if (localStorage.length == 0) {
+    else if (localStorage.length === 0) {
         itemsInCart = []
         document.querySelector('#card_button').innerHTML = '0'
     }
