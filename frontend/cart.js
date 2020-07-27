@@ -301,7 +301,6 @@ function insProductHTML() {
     for (let i = 0; i < document.getElementsByClassName('delete-button').length; i++) {
         document.getElementsByClassName('delete-button')[i].addEventListener('click', deleteOne)
     }
-
 }
 
 //POST to localhost:3000
@@ -351,5 +350,4 @@ formContact.addEventListener('click', function (e) { //submit
             alert('fetch POST error : ' + error)
         })
     }
-
 })
