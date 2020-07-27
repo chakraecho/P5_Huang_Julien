@@ -74,10 +74,8 @@ function removeOne(e) {
                     refreshCart();
                 }
             }
-            if (itemsInCart[i].qty <= 0) {
-                itemsInCart.splice(i, 1)
-                document.querySelector('[data="' + e.target.id + '"]').remove()
-
+            if (itemsInCart[i].qty === 0) {
+                deleteOne(e)
             }
         }
         if (itemsInCart === null === undefined || itemsInCart.length == 0) {
@@ -89,19 +87,18 @@ function removeOne(e) {
 
 function deleteOne(e) {
     let split = e.target.id.split('-')
-    for (let i = 0; i < itemsInCart.length; i++) {
-        if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
-            itemsInCart.splice(i, 1)
+    for (let j = 0; j < itemsInCart.length; j++) {
+        if (itemsInCart[j].id == split[0] && itemsInCart[j].color == split[1]) {
+            itemsInCart.splice(j, 1)
             cart.inCart = JSON.stringify(itemsInCart)
+            document.querySelector('[data="' + e.target.id + '"]').remove()
             refreshCart();
-
         }
-        if (itemsInCart === null === undefined || itemsInCart.length == 0) {
+        if (itemsInCart === null === undefined || itemsInCart.length === 0) {
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
             refreshCart();
         }
     }
-    document.querySelector('[data="' + e.target.id + '"]').remove()
     refreshCart();
 }
 
