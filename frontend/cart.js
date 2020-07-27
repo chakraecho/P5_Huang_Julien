@@ -1,23 +1,17 @@
 const api = "http://localhost:3000/api/teddies"
 
-
-
-
 //fetch method
 let fetchGET = { //get
     method: 'GET',
     mode: 'cors'
 }
 
-
-
-
 function sStorage(){
-    if(sessionStorage.items == undefined || sessionStorage.items.length == 0){
+    if(sessionStorage.items === undefined || sessionStorage.items.length === 0){
         sessionStorage.setItem('items', JSON.stringify(storedItems))
     }
 }
-if(sessionStorage.items == undefined ){
+if(sessionStorage.items === undefined ){
     fetch(api, fetchGET)
     .then(
         (response) => {
@@ -56,11 +50,11 @@ function updateQty(id, qty, price) {
 function addOne(e) {
     let split = e.target.id.split('-')
     for (let i = 0; i < itemsInCart.length; i++) {
-        if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
+        if (itemsInCart[i].id === split[0] && itemsInCart[i].color === split[1]) {
             itemsInCart[i].qty++
             cart.inCart = JSON.stringify(itemsInCart)
             for(let j=0; j< storedItems.length; j++){
-                if(itemsInCart[i].id == storedItems[j]._id){
+                if(itemsInCart[i].id === storedItems[j]._id){
                     updateQty(e.target.id, itemsInCart[i].qty, storedItems[j].price)
                     refreshCart();
                 }
@@ -72,11 +66,11 @@ function addOne(e) {
 function removeOne(e) {
     let split = e.target.id.split('-')
     for (let i = 0; i < itemsInCart.length; i++) {
-        if (itemsInCart[i].id == split[0] && itemsInCart[i].color == split[1]) {
+        if (itemsInCart[i].id === split[0] && itemsInCart[i].color === split[1]) {
             itemsInCart[i].qty--
             cart.inCart = JSON.stringify(itemsInCart)
             for(let j=0; j< storedItems.length; j++){
-                if(itemsInCart[i].id == storedItems[j]._id){
+                if(itemsInCart[i].id === storedItems[j]._id){
                     updateQty(e.target.id, itemsInCart[i].qty, storedItems[j].price)
                     refreshCart();
                 }
@@ -87,7 +81,7 @@ function removeOne(e) {
 
             }
         }
-        if(itemsInCart == null == undefined || itemsInCart.length == 0){
+        if(itemsInCart === null === undefined || itemsInCart.length == 0){
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
             refreshCart();
         }
@@ -103,7 +97,7 @@ function deleteOne(e) {
             refreshCart();
 
         }
-        if(itemsInCart == null == undefined || itemsInCart.length == 0){
+        if(itemsInCart === null === undefined || itemsInCart.length == 0){
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
             refreshCart();
         }
@@ -116,7 +110,7 @@ function deleteOne(e) {
 
 
 function insLocalStorage() {
-    if (localStorage == null || localStorage.length == 0 || localStorage == undefined) { //if first time connecting to this website
+    if (localStorage === null || localStorage.length === 0 || localStorage === undefined) { //if first time connecting to this website
         itemsInCart = []
         document.querySelector('#card_button').innerHTML = '0'
         return "ok"
@@ -136,7 +130,7 @@ function validationForm(){
     let CP = document.querySelector('#CP').value
     let regexMail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/
     let regexCP = new RegExp('[0-9]{5}')
-    let regexName = /^[a-z ,.'-]+$/
+    let regexName = /^[a-zA-Z0-9._-]+$/
     if(name.length < 2 || firstName.length < 2 || email.length < 2 || address.length <2 || city.length <2 || CP.length<2){
         return false
     }
@@ -157,7 +151,7 @@ function validationForm(){
 
 //is there smthng in cart ?????
 function insProductHTML() {
-    if (cart == undefined || cart.length == 0 || itemsInCart.length == 0 ||itemsInCart == null == undefined) {
+    if (cart === undefined || cart.length === 0 || itemsInCart.length === 0 ||itemsInCart === null === undefined) {
         document.querySelector('#in-cart').innerHTML = "Votre panier est vide.... (ou presque !)"
     } else {
         document.querySelector('#in-cart-list').insertAdjacentHTML('beforeend',
@@ -186,7 +180,7 @@ function insProductHTML() {
         )
         for (let j = 0; j < itemsInCart.length; j++) {
             for (let i = 0; i < storedItems.length; i++) {
-                if (storedItems[i]._id == itemsInCart[j].id) {
+                if (storedItems[i]._id === itemsInCart[j].id) {
                     document.querySelector('#in-cart-list').insertAdjacentHTML('beforeend',
                         `
                         <section class="col-12 in-cart-object" data="${storedItems[i]._id}-${itemsInCart[j].color}">
@@ -232,17 +226,17 @@ function insProductHTML() {
                                     <label for='name' class="col-2">
                                         Nom
                                     </label>
-                                    <input type="text" required class='col mx-2 form-control-sm' id="name" pattern="[a-z ,.'-]*" />
+                                    <input type="text" required class='col mx-2 form-control-sm' id="name" pattern="[a-zA-Z0-9._-]*" />
                                     <label for='first-name'>
                                         Prénom
                                     </label>
-                                    <input type="text" class='col mx-2 form-control-sm' required id="first-name" pattern="[a-z ,.'-]*" />
+                                    <input type="text" class='col mx-2 form-control-sm' required id="first-name" pattern="[a-zA-Z0-9._-]*" />
                                 </div>
                                 <div class="form-row mt-1">
                                     <label for='email' class="col-2">
                                         email
                                     </label>
-                                    <input type="email" class='col mx-2 form-control-sm'required  id="email" />
+                                    <input type="email" class='col mx-2 form-control-sm'required  id="email" pattern='[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$'/>
                                 </div>
                                 <div class="form-row mt-1">
                                     <label for='adress' class='col-2'>

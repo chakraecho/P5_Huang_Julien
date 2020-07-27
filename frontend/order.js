@@ -9,7 +9,7 @@ storedItems = JSON.parse(sessionStorage.items)
 
 for (let i = 0; i < items.length; i++) {
     for (let j = 0; j< storedItems.length; j++){
-        if(items[i].id == storedItems[j]._id){
+        if(items[i].id === storedItems[j]._id){
             insRecap.insertAdjacentHTML('beforeend', `
             <div class='row'>
                 <div class='col-3 text-center'>

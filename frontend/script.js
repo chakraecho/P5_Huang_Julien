@@ -2,7 +2,7 @@ var response;
 const api = "http://localhost:3000/api/teddies"
 
 //fetch method
-let fetchGET = { //get
+const fetchGET = { //get
     method: 'GET',
     mode: 'cors'
 }
@@ -37,7 +37,7 @@ function insItems(){
 }
 
 
-if(sessionStorage.items == null || sessionStorage.items == undefined || sessionStorage.items.length == 0){
+if(sessionStorage.items === null || sessionStorage.items === undefined || sessionStorage.items.length === 0){
 
     fetch(api, fetchGET ).then(
         (response)=>{

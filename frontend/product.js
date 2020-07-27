@@ -4,7 +4,7 @@ const api = "http://localhost:3000/api/teddies"
 let product
 
 
-let fetchGET = { //get
+const fetchGET = { //get
     method: 'GET',
     mode: 'cors'
 }
@@ -19,7 +19,7 @@ function objectIsEmpty(obj){
 
 function clickAddCart(){
 
-    $('.add_cart').on('click', function (e) {//ADD CART on button listener
+    document.querySelector('.add_cart').addEventListener('click', function (e) {//ADD CART on button listener
         let colorSelect = document.querySelector('#color-select_menu').value
         let isInCart = false
         if(itemsInCart.length > 0){
@@ -29,7 +29,7 @@ function clickAddCart(){
                         isInCart = true
                 }
             }
-            if(isInCart == false){
+            if(isInCart === false){
                 itemsInCart.push({'id' :this.id, 'color': colorSelect, 'qty': 1})
 
             }
@@ -96,12 +96,11 @@ function insProductHTML(){
     let idProduct = chemin.substring(1)
 
 
-if (sessionStorage.items == undefined){
+if (sessionStorage.items === undefined){
     fetch(api, fetchGET ).then(
         (response)=>{
             response.json().then(
                 data => {
-
                     storedItems = data
                     if (data.length > 0) {//if teddy in stock
                         sessionStorage.setItem('items', JSON.stringify(data))
@@ -142,7 +141,7 @@ if (sessionStorage.items == undefined){
 else{
     storedItems = JSON.parse(sessionStorage.items)
     for (let i = 0; i< JSON.parse(sessionStorage.items).length; i++){
-        if(idProduct == JSON.parse(sessionStorage.items)[i]._id){
+        if(idProduct === JSON.parse(sessionStorage.items)[i]._id){
             product = JSON.parse(sessionStorage.items)[i]
         }
     }
