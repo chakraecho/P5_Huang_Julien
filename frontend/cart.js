@@ -6,45 +6,44 @@ let fetchGET = { //get
     mode: 'cors'
 }
 
-function sStorage(){
-    if(sessionStorage.items === undefined || sessionStorage.items.length === 0){
+function sStorage() {
+    if (sessionStorage.items === undefined || sessionStorage.items.length === 0) {
         sessionStorage.setItem('items', JSON.stringify(storedItems))
     }
 }
-if(sessionStorage.items === undefined ){
+if (sessionStorage.items === undefined) {
     fetch(api, fetchGET)
-    .then(
-        (response) => {
-            try {
-                response.json().then(
-                    (data) => {
-                        storedItems = data
-                        sStorage();
-                        insLocalStorage();
-                        insProductHTML();
-                    }
-                )
-            } catch {
-                console.log('error parsing data')
+        .then(
+            (response) => {
+                try {
+                    response.json().then(
+                        (data) => {
+                            storedItems = data
+                            sStorage();
+                            insLocalStorage();
+                            insProductHTML();
+                        }
+                    )
+                } catch {
+                    console.log('error parsing data')
+                }
             }
-        }
-    )
-    .catch(
-        error => {
-            console.log('fetch errror:', error)
-        }
-    )
+        )
+        .catch(
+            error => {
+                console.log('fetch errror:', error)
+            }
+        )
 }
-else{
+else {
     storedItems = JSON.parse(sessionStorage.items)
     insLocalStorage();
     insProductHTML();
 }
 
-
 function updateQty(id, qty, price) {
     document.querySelector("[data-qty='" + id + "']").innerHTML = qty
-    document.querySelector("[data-total='"+ id +"']").innerHTML = qty * price / 100 + ' €'
+    document.querySelector("[data-total='" + id + "']").innerHTML = qty * price / 100 + ' €'
 }
 
 function addOne(e) {
@@ -53,8 +52,8 @@ function addOne(e) {
         if (itemsInCart[i].id === split[0] && itemsInCart[i].color === split[1]) {
             itemsInCart[i].qty++
             cart.inCart = JSON.stringify(itemsInCart)
-            for(let j=0; j< storedItems.length; j++){
-                if(itemsInCart[i].id === storedItems[j]._id){
+            for (let j = 0; j < storedItems.length; j++) {
+                if (itemsInCart[i].id === storedItems[j]._id) {
                     updateQty(e.target.id, itemsInCart[i].qty, storedItems[j].price)
                     refreshCart();
                 }
@@ -69,19 +68,19 @@ function removeOne(e) {
         if (itemsInCart[i].id === split[0] && itemsInCart[i].color === split[1]) {
             itemsInCart[i].qty--
             cart.inCart = JSON.stringify(itemsInCart)
-            for(let j=0; j< storedItems.length; j++){
-                if(itemsInCart[i].id === storedItems[j]._id){
+            for (let j = 0; j < storedItems.length; j++) {
+                if (itemsInCart[i].id === storedItems[j]._id) {
                     updateQty(e.target.id, itemsInCart[i].qty, storedItems[j].price)
                     refreshCart();
                 }
             }
-            if(itemsInCart[i].qty <=0 ){
+            if (itemsInCart[i].qty <= 0) {
                 itemsInCart.splice(i, 1)
                 document.querySelector('[data="' + e.target.id + '"]').remove()
 
             }
         }
-        if(itemsInCart === null === undefined || itemsInCart.length == 0){
+        if (itemsInCart === null === undefined || itemsInCart.length == 0) {
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
             refreshCart();
         }
@@ -97,7 +96,7 @@ function deleteOne(e) {
             refreshCart();
 
         }
-        if(itemsInCart === null === undefined || itemsInCart.length == 0){
+        if (itemsInCart === null === undefined || itemsInCart.length == 0) {
             document.querySelector('#in-cart').innerHTML = 'Votre Panier est vide !'
             refreshCart();
         }
@@ -105,9 +104,6 @@ function deleteOne(e) {
     document.querySelector('[data="' + e.target.id + '"]').remove()
     refreshCart();
 }
-
-
-
 
 function insLocalStorage() {
     if (localStorage === null || localStorage.length === 0 || localStorage === undefined) { //if first time connecting to this website
@@ -121,7 +117,7 @@ function insLocalStorage() {
     };
 }
 
-function validationForm(){
+function validationForm() {
     let name = document.querySelector('#name').value
     let firstName = document.querySelector('#first-name').value
     let email = document.querySelector('#email').value
@@ -131,27 +127,25 @@ function validationForm(){
     let regexMail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/
     let regexCP = new RegExp('[0-9]{5}')
     let regexName = /^[a-zA-Z0-9._-]+$/
-    if(name.length < 2 || firstName.length < 2 || email.length < 2 || address.length <2 || city.length <2 || CP.length<2){
+    if (name.length < 2 || firstName.length < 2 || email.length < 2 || address.length < 2 || city.length < 2 || CP.length < 2) {
         return false
     }
-    else if(!regexName.test(name) || !regexName.test(firstName)){
+    else if (!regexName.test(name) || !regexName.test(firstName)) {
         return false
     }
-    else if(!regexMail.test(email)){
+    else if (!regexMail.test(email)) {
         return false
     }
-    else if(!regexCP.test(CP)){
+    else if (!regexCP.test(CP)) {
         return false
     }
-    else{
+    else {
         return true
     }
 }
 
-
-//is there smthng in cart ?????
 function insProductHTML() {
-    if (cart === undefined || cart.length === 0 || itemsInCart.length === 0 ||itemsInCart === null === undefined) {
+    if (cart === undefined || cart.length === 0 || itemsInCart.length === 0 || itemsInCart === null === undefined) {
         document.querySelector('#in-cart').innerHTML = "Votre panier est vide.... (ou presque !)"
     } else {
         document.querySelector('#in-cart-list').insertAdjacentHTML('beforeend',
@@ -206,7 +200,7 @@ function insProductHTML() {
                                 <div class="col-3">
                                     <div class='row h-100 align-content-between'>
                                         <div class="col-12 col-md-6">
-                                            <p data-total="${storedItems[i]._id}-${itemsInCart[j].color}">${storedItems[i].price * itemsInCart[j].qty /100} €</p>
+                                            <p data-total="${storedItems[i]._id}-${itemsInCart[j].color}">${storedItems[i].price * itemsInCart[j].qty / 100} €</p>
                                         </div>
                                         <div class="col-md-4 col-12 p-0">
                                                 <img class="delete-button w-50" id="${storedItems[i]._id}-${itemsInCart[j].color}" src="./img/cart/trash.svg" />
@@ -273,41 +267,34 @@ function insProductHTML() {
                             <input type='radio' id="visa" name='payment-method' class="ml-2" control="visa">
                             <label for="visa" class="col-4 col-md-2"><img src="./img/cart/visa.svg" alt="visa" /> </label>
                     </div>
-
-
-
-                        <div class="form-group">
-                            <label for="card-number" class="px-0 col-4">numéro de carte</label>
-                            <input type="text" pattern="\d{16}" name='card-number' maxlength="16" id='card-number'
-                                class='col-7 form-control-sm' />
+                    <div class="form-group">
+                        <label for="card-number" class="px-0 col-4">numéro de carte</label>
+                        <input type="text" pattern="\d{16}" name='card-number' maxlength="16" id='card-number'
+                            class='col-7 form-control-sm' />
+                    </div>
+                    <div class="form-group">
+                        <label for="card-name" class='px-0 col-4'>Titulaire</label>
+                        <input type="text" name='card-name' id='card-name' class="col-7 form-control-sm" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-6">
+                            <label for="card-expire">exp</label>
+                            <input type="text" class="col-4 form-control-sm" max="12" maxlength="2"
+                                name='card-expire-month' id='card-expire' />
+                            <input type="text" max="99" class="col-4 form-control-sm" maxlength="2" min="20"
+                                name='card-expire-year' id="card-expire-year" />
                         </div>
-                        <div class="form-group">
-                            <label for="card-name" class='px-0 col-4'>Titulaire</label>
-                            <input type="text" name='card-name' id='card-name' class="col-7 form-control-sm" />
+                        <div class='form-group col-6 justify-content-end'>
+                            <label for='card-code'>code :</label>
+                            <input type="text" pattern="\d{3}" maxlength="3" id='card-code' name='card-code'
+                                class="col-4 form-control-sm" />
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-6">
-                                <label for="card-expire">exp</label>
-                                <input type="text" class="col-4 form-control-sm" max="12" maxlength="2"
-                                    name='card-expire-month' id='card-expire' />
-                                <input type="text" max="99" class="col-4 form-control-sm" maxlength="2" min="20"
-                                    name='card-expire-year' id="card-expire-year" />
-                            </div>
-                            <div class='form-group col-6 justify-content-end'>
-                                <label for='card-code'>code :</label>
-                                <input type="text" pattern="\d{3}" maxlength="3" id='card-code' name='card-code'
-                                    class="col-4 form-control-sm" />
-                            </div>
-                        </div>
-                    
+                    </div>
         `)
-        
-
     }
 
     refreshCart();
     //add remove and delete
-
     for (let i = 0; i < document.getElementsByClassName('add-one').length; i++) {
         document.getElementsByClassName('add-one')[i].addEventListener('click', addOne)
     }
@@ -319,11 +306,6 @@ function insProductHTML() {
     }
 
 }
-
-
-
-
-
 
 //POST to localhost:3000
 var formContact = document.querySelector('#POSTdata')
@@ -351,9 +333,8 @@ function stringifyPost() {
     })
 }
 
-
 formContact.addEventListener('click', function (e) { //submit
-    if(validationForm()){
+    if (validationForm()) {
         e.preventDefault();
         fetch('http://localhost:3000/api/teddies/order', {
             method: 'POST',
@@ -365,9 +346,9 @@ formContact.addEventListener('click', function (e) { //submit
         }).then(response => {
             return response.json();
         }).then(jsonResponse => {
-            sessionStorage.setItem('confirmation',JSON.stringify(itemsInCart))
+            sessionStorage.setItem('confirmation', JSON.stringify(itemsInCart))
             sessionStorage.setItem('contact', JSON.stringify(jsonResponse.contact))
-            window.location.href = './order.html?confirmation='+jsonResponse.orderId
+            window.location.href = './order.html?confirmation=' + jsonResponse.orderId
         })
         .catch((error) => {
             alert('fetch POST error : ' + error)

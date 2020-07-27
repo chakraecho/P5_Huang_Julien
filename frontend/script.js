@@ -7,12 +7,11 @@ const fetchGET = { //get
     mode: 'cors'
 }
 
-
-function insItems(){
+function insItems() {
     storedItems.forEach((element, index) => {//insert all teddies in a list
         //insert card
         document.querySelector('#objectList').insertAdjacentHTML("beforeend", `
-        <aside class="card col-md-5 align-content-between col-8 mx-auto p-0 ml-2 mr-2 mb-2" id="card_' + index + '"data-id=" ${storedItems[index]._id}">
+        <article class="card col-md-5 align-content-between col-8 mx-auto p-0 ml-2 mr-2 mb-2" id="card_' + index + '"data-id=" ${storedItems[index]._id}">
                 <a href="./product.html?${storedItems[index]._id}" >
                     <img class="card-img-top border border-light" id="card-img_' + index + '" alt="image de ${storedItems[index].name}" src="${storedItems[index].imageUrl}"/>
                 </a>
@@ -31,16 +30,15 @@ function insItems(){
                     </a>
                 </div>
             </div>
-        </aside>
+        </article>
         `);
     })
 }
 
 
-if(sessionStorage.items === null || sessionStorage.items === undefined || sessionStorage.items.length === 0){
-
-    fetch(api, fetchGET ).then(
-        (response)=>{
+if (sessionStorage.items === null || sessionStorage.items === undefined || sessionStorage.items.length === 0) {
+    fetch(api, fetchGET).then(
+        (response) => {
             response.json().then(
                 data => {
                     storedItems = data
@@ -56,11 +54,11 @@ if(sessionStorage.items === null || sessionStorage.items === undefined || sessio
             )
         }
     )
-    .catch(error => {
-        document.querySelector('.listed-Object').innerHTML = error
-    });
-    }
-else{
+        .catch(error => {
+            document.querySelector('.listed-Object').innerHTML = error
+        });
+}
+else {
     storedItems = JSON.parse(sessionStorage.items)
     insItems();
     insPopover()
