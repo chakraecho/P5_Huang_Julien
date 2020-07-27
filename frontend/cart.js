@@ -344,6 +344,7 @@ formContact.addEventListener('click', function (e) { //submit
         }).then(jsonResponse => {
             sessionStorage.setItem('confirmation', JSON.stringify(itemsInCart))
             sessionStorage.setItem('contact', JSON.stringify(jsonResponse.contact))
+            sessionStorage.setItem('orderId',jsonResponse.orderId)
             window.location.href = './order.html?confirmation=' + jsonResponse.orderId
         })
         .catch((error) => {
