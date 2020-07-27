@@ -103,9 +103,9 @@ function deleteOne(e) {
 }
 
 function insLocalStorage() {
-    if (localStorage === null || localStorage.length === 0 || localStorage === undefined) { //if first time connecting to this website
+    if (localStorage === null | localStorage.inCart.length === 0 | localStorage.length === 0 | localStorage === undefined ) { //if first time connecting to this website
         itemsInCart = []
-        document.querySelector('#card_button').innerHTML = '0'
+        document.querySelector('#in_cart_count').innerHTML = '0'
         return "ok"
     } else {
         itemsInCart = JSON.parse(localStorage.getItem('inCart'))
@@ -121,7 +121,7 @@ function validationForm() {
     let address = document.querySelector('#adress').value
     let city = document.querySelector('#city').value
     let CP = document.querySelector('#CP').value
-    let regexMail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/
+    let regexMail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,}$/
     let regexCP = new RegExp('[0-9]{5}')
     let regexName = /^[a-zA-Z0-9._-]+$/
     if (name.length < 2 || firstName.length < 2 || email.length < 2 || address.length < 2 || city.length < 2 || CP.length < 2) {
@@ -227,7 +227,7 @@ function insProductHTML() {
                                     <label for='email' class="col-2">
                                         email
                                     </label>
-                                    <input type="email" class='col mx-2 form-control-sm'required  id="email" pattern='[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$'/>
+                                    <input type="email" class='col mx-2 form-control-sm'required  id="email" pattern='[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,}'/>
                                 </div>
                                 <div class="form-row mt-1">
                                     <label for='adress' class='col-2'>
